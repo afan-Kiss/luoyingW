@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.hjq.demo.R;
@@ -14,6 +16,8 @@ import com.hjq.demo.helper.InputTextHelper;
 import com.hjq.demo.model.UserInfoModel;
 import com.hjq.demo.other.IntentKey;
 import com.hjq.demo.util.ApiURLUtils;
+import com.hjq.demo.util.DoubleClickUtils;
+import com.hjq.toast.ToastUtils;
 import com.hjq.widget.view.CountdownView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -30,21 +34,49 @@ import butterknife.OnClick;
  */
 public final class RegisterActivity extends MyActivity {
 
+    /**
+     * 输入账号
+     */
     @BindView(R.id.et_register_phone)
     EditText mPhoneView;
+    /**
+     * 获取验证码按钮
+     */
     @BindView(R.id.cv_register_countdown)
     CountdownView mCountdownView;
 
+    /**
+     * 输入验证码
+     */
     @BindView(R.id.et_register_code)
     EditText mCodeView;
-
+    /**
+     * 输入密码
+     */
     @BindView(R.id.et_register_password1)
     EditText mPasswordView1;
+    /**
+     * 再次输入密码
+     */
     @BindView(R.id.et_register_password2)
     EditText mPasswordView2;
-
+    /**
+     * 提交注册
+     */
     @BindView(R.id.btn_register_commit)
     Button mCommitView;
+
+    /**
+     * checkbox
+     */
+    @BindView(R.id.cbx_allow)
+    CheckBox mCbxAllow;
+    /**
+     * 用户协议
+     */
+    @BindView(R.id.txt_agreement)
+    TextView mAgreeMent;
+
 
     @Override
     protected int getLayoutId() {
@@ -82,11 +114,11 @@ public final class RegisterActivity extends MyActivity {
         return super.statusBarConfig().keyboardEnable(true);
     }
 
-    @OnClick({R.id.cv_register_countdown, R.id.btn_register_commit})
+    @OnClick({R.id.cv_register_countdown, R.id.btn_register_commit, R.id.cbx_allow, R.id.txt_agreement})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cv_register_countdown:
-                // 获取验证码
+                // 获取验证码按钮
                 if (mPhoneView.getText().toString().length() != 11) {
 
                     // 重置验证码倒计时控件
@@ -98,8 +130,29 @@ public final class RegisterActivity extends MyActivity {
                 }
                 break;
             case R.id.btn_register_commit:
-                // 提交注册
+                // 提交注册按钮
+                if(DoubleClickUtils.isDoubleClick()){
+                    return;
+                }
+                if(!mCbxAllow.isChecked()){
+                    ToastUtils.show("您还没有同意<注册协议>哦");
+                    return;
+                }
+
+
                 registereduser();
+                break;
+
+            case R.id.cbx_allow:
+                //阅读并同意注册协议
+                if(DoubleClickUtils.isDoubleClick()){
+                    return;
+                }
+                mCbxAllow.setChecked(!mCbxAllow.isChecked());
+                break;
+            case R.id.txt_agreement:
+                //展示注册协议
+                startActivity(new Intent(this,AgreementActivity.class));
                 break;
             default:
                 break;

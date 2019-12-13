@@ -30,10 +30,11 @@
 
         <ImageView
             android:id="@+id/logo_iv"
-            android:layout_width="136dp"
-            android:layout_height="95dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/login_logo" />
+            android:background="@drawable/login_logo"
+            android:layout_marginLeft="15dp"/>
 
 
     </LinearLayout>
@@ -45,22 +46,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_home_text"
         android:layout_marginTop="70dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:gravity="center"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_area_code"
-            style="@style/EditTextStyle"
-            android:layout_width="70dp"
-            android:layout_height="54dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
-            android:hint="区号"
-            android:singleLine="true"
-            android:paddingLeft="15dp"
-            android:gravity="center"
-            android:drawableLeft="@drawable/login_phone"
-            android:text="86"/>
+
 
         <com.hjq.widget.view.ClearEditText
             android:id="@+id/et_login_phone"
@@ -68,13 +59,16 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/et_area_code"
-            android:gravity="center"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
             android:hint="@string/common_phone_input_hint"
             android:singleLine="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:drawablePadding="20dp"
+            android:focusableInTouchMode="true"
+            android:drawableLeft="@drawable/login_phone"
+
             />
 
        <!-- <ImageView
@@ -88,18 +82,18 @@
         <com.hjq.widget.view.PasswordEditText
             android:id="@+id/et_login_password"
             style="@style/EditTextStyle"
-            android:layout_width="315dp"
+            android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_below="@+id/et_login_phone"
             android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
             android:layout_marginTop="24dp"
-            android:layout_marginRight="40dp"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:hint="@string/common_password_input_error"
             android:maxLength="20"
             android:maxLines="1"
-            android:paddingLeft="15dp"
+            android:paddingLeft="20dp"
+            android:drawablePadding="20dp"
+            android:focusableInTouchMode="true"
             android:drawableLeft="@drawable/login_password"/>
 
      <!--   <ImageView
@@ -113,35 +107,39 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login"
             style="@style/ButtonStyle"
-            android:layout_width="315dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/et_login_password"
             android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
             android:layout_marginTop="45dp"
-            android:layout_marginRight="40dp"
             android:text="@string/login_text" />
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/Register_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="17dp"
-        android:gravity="center">
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:padding="20dp"
+        android:gravity="center_vertical">
 
         <TextView
+            android:id="@+id/btn_forgetr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="没有账号？"
+            android:layout_weight="1"
+            android:text="忘记密码？"
+            android:gravity="left|center_vertical"
             android:textColor="#ff666666"
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
             android:text="快速注册"
             android:textColor="#fff7bc65"
             android:textSize="15sp" />

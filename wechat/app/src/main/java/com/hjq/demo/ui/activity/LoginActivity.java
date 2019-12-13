@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -21,6 +23,7 @@ import com.hjq.demo.session.UserManager;
 import com.hjq.demo.util.ApiURLUtils;
 import com.hjq.demo.util.PreKeys;
 import com.hjq.demo.util.PrefUtils;
+import com.hjq.widget.view.PasswordEditText;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -34,18 +37,35 @@ import butterknife.OnClick;
  */
 public final class LoginActivity extends MyActivity {
 
+
     @BindView(R.id.ll_login_body)
     LinearLayout mBodyLayout;
+
+    /**
+     * 输入账号文本框
+     */
     @BindView(R.id.et_login_phone)
     EditText mPhoneView;
+    /**
+     * 输入密码文本框
+     */
     @BindView(R.id.et_login_password)
     EditText mPasswordView;
+    /**
+     * 登录按钮
+     */
     @BindView(R.id.btn_login)
     Button mCommitView;
-    @BindView(R.id.Register_ll)
-    LinearLayout Register_ll;
-    @BindView(R.id.et_area_code)
-    EditText mEtAreaCode;
+    /**
+     * 忘记密码
+     */
+    @BindView(R.id.btn_forgetr)
+    TextView button_forgetr;
+    /**
+     * 注册按钮
+     */
+    @BindView(R.id.btn_register)
+    TextView Register_ll;
 
     /**
      * logo 缩放比例
@@ -77,14 +97,7 @@ public final class LoginActivity extends MyActivity {
                 })
                 .build();
 
-        post(new Runnable() {
 
-            @Override
-            public void run() {
-                // 因为在小屏幕手机上面，因为计算规则的因素会导致动画效果特别夸张，所以不在小屏幕手机上面展示这个动画效果
-
-            }
-        });
     }
 
     @Override
@@ -97,6 +110,9 @@ public final class LoginActivity extends MyActivity {
             mPhoneView.setText(PrefUtils.getString(this,PreKeys.USERNAME,""));
             mPasswordView.setText(PrefUtils.getString(this,PreKeys.PASSWORD,""));
         }
+
+        PasswordEditText text;
+
     }
 
     @Override
@@ -116,7 +132,7 @@ public final class LoginActivity extends MyActivity {
         });
     }
 
-    @OnClick({R.id.btn_login, R.id.Register_ll})
+    @OnClick({R.id.btn_login, R.id.btn_register,R.id.btn_forgetr})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
@@ -135,10 +151,15 @@ public final class LoginActivity extends MyActivity {
                 }
                 break;
 
-            case R.id.Register_ll:
+            case R.id.btn_register:
                 Intent intent = new Intent();
                 intent.setClass(this, RegisterActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.btn_forgetr:
+                //跳转忘记密码界面
+                startActivity(new Intent(this,PasswordForgetActivity.class));
+                break;
             default:
                 break;
         }
