@@ -127,7 +127,7 @@ public final class SettingActivity extends MyActivity
                 finish();
                 break;
             case R.id.sb_change_password:
-                startActivity(PasswordForgetActivity.class);
+                startActivity(PasswordResetActivity.class);
                 break;
             default:
                 break;

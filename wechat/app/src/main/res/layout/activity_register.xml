@@ -1,205 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
 
+    tools:context=".ui.activity.RegisterActivity">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:backButton="false"
+        app:barStyle="transparent"
+        app:leftColor="@color/colorAccent"
+        app:title="" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/login_logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        tools:context=".ui.activity.RegisterActivity"
-        android:gravity="center_horizontal">
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingBottom="20dp">
 
-        <com.hjq.bar.TitleBar
+        <com.hjq.widget.view.RegexEditText
+            android:id="@+id/et_register_phone"
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:backButton="false"
-            app:barStyle="transparent"
-            app:leftColor="@color/colorAccent"
-            app:title="" />
-        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
+            android:hint="请输入手机号"
+            android:inputType="phone"
+            android:singleLine="true"
+            app:regexType="mobile" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2"
+            android:gravity="center_vertical">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_register_code"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="left|center_vertical"
+                android:hint="@string/common_code_input_hint"
+                android:inputType="number"
+                android:maxLength="6"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <com.hjq.widget.view.CountdownView
+                android:id="@+id/cv_register_countdown"
+                style="@style/CountdownViewStyle"
+                android:layout_alignTop="@id/et_register_code"
+                android:layout_alignRight="@id/et_register_code"
+                android:layout_alignBottom="@id/et_register_code"
+                android:layout_margin="5dp"
+                android:textColor="@color/windowBackground" />
+
+
+        </RelativeLayout>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/login_logo"
-            android:layout_marginLeft="15dp"/>
+            android:layout_gravity="left"
 
-        <LinearLayout
+            android:layout_margin="4dp"
+            android:text="@string/Verification"
+            android:textColor="#ED4965"
+            android:textSize="13.53sp"
+            android:visibility="invisible">
+
+        </TextView>
+
+        <!--        <View style="@style/HorizontalLineStyle" />-->
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="40dp"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:paddingBottom="20dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            >
+            android:layout_height="54dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
+            android:gravity="center_horizontal">
 
-            <com.hjq.widget.view.RegexEditText
-                android:id="@+id/et_register_phone"
+
+            <com.hjq.widget.view.PasswordEditText
+                android:id="@+id/et_register_password1"
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:layout_weight="2"
-                android:hint="请输入手机号/邮箱"
-                android:inputType="textEmailAddress|phone"
-                android:singleLine="true"
-                />
-            <!--        app:regexType="mobile"-->
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="2"
-                android:layout_marginTop="20dp"
-                android:gravity="center_vertical">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_register_code"
-                    style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/register_password_hint1"
+                android:maxLength="20"
+                android:maxLines="1" />
+        </RelativeLayout>
 
 
-                    android:hint="@string/common_code_input_hint"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2"
 
-                <com.hjq.widget.view.CountdownView
-                    android:id="@+id/cv_register_countdown"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    style="@style/CountdownViewStyle"
-                    android:layout_alignRight="@id/et_register_code"
-                    android:textColor="@color/windowBackground" />
+            >
 
 
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Verification"
-
-                android:layout_gravity="left"
-                android:textColor="#ED4965"
-                android:textSize="13.53sp"
-                android:layout_margin="4dp"
-                android:visibility="invisible">
-
-            </TextView>
-
-            <!--        <View style="@style/HorizontalLineStyle" />-->
-
-            <RelativeLayout
+            <com.hjq.widget.view.PasswordEditText
+                android:id="@+id/et_register_password2"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:gravity="center_horizontal"
-                android:layout_weight="2"
-                >
+                android:hint="@string/register_password_hint2"
+                android:maxLength="20"
+                android:maxLines="1" />
 
+        </RelativeLayout>
 
-                <com.hjq.widget.view.PasswordEditText
-                    android:id="@+id/et_register_password1"
-                    style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/register_password_hint1"
-                    android:maxLength="20"
-                    android:maxLines="1" />
-            </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_margin="4dp"
+            android:text="@string/password_not_equal"
+            android:textColor="#ED4965"
+            android:textSize="13.53sp"
+            android:visibility="invisible">
 
+        </TextView>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:gravity="center_vertical">
 
-            <RelativeLayout
+            <CheckBox
+                android:id="@+id/cbx_allow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="2"
-                android:layout_marginTop="20dp"
-
-                >
-
-
-                <com.hjq.widget.view.PasswordEditText
-                    android:id="@+id/et_register_password2"
-                    style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:hint="@string/register_password_hint2"
-                    android:maxLength="20"
-                    android:maxLines="1" />
-
-            </RelativeLayout>
+                android:text="我已阅读并同意"
+                android:textColor="#888888"
+                android:textSize="13sp"></CheckBox>
 
             <TextView
+                android:id="@+id/txt_agreement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/password_not_equal"
-                android:layout_gravity="left"
-                android:textColor="#ED4965"
-                android:textSize="13.53sp"
-                android:layout_margin="4dp"
-                android:visibility="invisible">
-
-            </TextView>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_gravity="left"
-                >
-                <CheckBox
-                    android:id="@+id/cbx_allow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="我已阅读并同意"
-                    android:textSize="13sp"
-                    android:textColor="#888888"
-                    >
-                </CheckBox>
-
-                <TextView
-                    android:id="@+id/txt_agreement"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="《注册协议》"
-                    android:textSize="13sp"
-                    android:textColor="#FD9644"></TextView>
-            </LinearLayout>
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_register_commit"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:text="@string/register_title"
-                android:layout_weight="2"
-                />
-
-
-
-
+                android:text="《注册协议》"
+                android:textColor="#FD9644"
+                android:textSize="13sp"></TextView>
         </LinearLayout>
 
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_register_commit"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="2"
+            android:text="@string/register_title" />
 
 
     </LinearLayout>
 
-</ScrollView>
+
+</LinearLayout>
+
 
 

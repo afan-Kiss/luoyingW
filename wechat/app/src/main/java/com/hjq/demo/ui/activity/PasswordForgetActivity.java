@@ -13,10 +13,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2019/02/27
- *    desc   : 忘记密码
+ *    author : Cinpe
  */
 public final class PasswordForgetActivity extends MyActivity {
 

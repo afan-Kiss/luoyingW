@@ -97,26 +97,30 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustResize"/> <!-- 登录界面 -->
+            android:windowSoftInputMode="stateVisible|adjustResize"/> <!-- 主界面 -->
         <activity
             android:name=".ui.activity.LoginActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustResize"/> <!-- 注册界面 -->
+                android:windowSoftInputMode="adjustPan"
+
+        /> <!-- 登录界面 -->
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" /> <!-- 设置界面 -->
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            /> <!-- 注册界面 -->
         <activity
             android:name=".ui.activity.SettingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/setting_title"
-            android:screenOrientation="portrait" /> <!-- 忘记密码 -->
+            android:screenOrientation="portrait" /> <!-- 重置密码 -->
         <activity
             android:name=".ui.activity.PasswordForgetActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/password_forget_title"
-            android:screenOrientation="portrait" /> <!-- 重置密码 -->
+            android:screenOrientation="portrait" /> <!-- 忘记密码 -->
         <activity
             android:name=".ui.activity.PasswordResetActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

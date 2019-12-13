@@ -1,12 +1,19 @@
 package com.hjq.demo.ui.activity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.hjq.demo.R;
+import com.hjq.demo.api.API;
 import com.hjq.demo.common.MyActivity;
 import com.hjq.demo.helper.InputTextHelper;
+import com.hjq.demo.session.UserManager;
+import com.hjq.demo.util.ApiURLUtils;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -63,5 +70,46 @@ public final class PasswordResetActivity extends MyActivity {
             default:
                 break;
         }
+    }
+
+
+    /**
+     * 重置密码~
+     */
+
+    void resetPassword() {
+        map.clear();
+        map.put("Method", "Respwd");
+        map.put("Sinkey", UserManager.getUser().getLoginkey());
+        map.put("Username", UserManager.getUser().getUser_id());
+        OkGo.<String>post(API.BASE_API)
+                .params("Data", ApiURLUtils.GetDate(map))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        Log.i("123", "onSuccess: " + GetDate(response.body()));
+                        if (CheckDate(response.body()).getState() != 1) {
+                            MessageDialog(CheckDate(response.body()).getMsg());
+                            return;
+
+                        }
+                        Log.i("getcode", "onSuccess: " + GetDate(response.body()));
+                        MessageDialog(CheckDate(response.body()).getMsg());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        toast("服务器异常");
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        showComplete();
+                    }
+                });
+
+
     }
 }

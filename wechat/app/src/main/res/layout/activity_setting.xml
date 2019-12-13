@@ -19,7 +19,6 @@
         android:layout_marginTop="15dp"
         app:bar_leftText="@string/change_password"
         app:bar_rightIcon="@drawable/ico_go_black" />
-    app:bar_rightIcon="@drawable/ico_go_black"/>
 
     <com.hjq.widget.layout.SettingBar
         android:id="@+id/sb_setting_language"

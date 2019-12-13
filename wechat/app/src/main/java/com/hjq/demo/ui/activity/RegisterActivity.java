@@ -108,13 +108,14 @@ public final class RegisterActivity extends MyActivity {
 
     }
 
-    @Override
-    protected ImmersionBar statusBarConfig() {
-        // 不要把整个布局顶上去
-        return super.statusBarConfig().keyboardEnable(true);
-    }
+//        //蛇精病,就是要把布局顶上去
+//    @Override
+//    protected ImmersionBar statusBarConfig() {
+////        // 不要把整个布局顶上去
+//        return super.statusBarConfig().keyboardEnable(true);
+//    }
 
-    @OnClick({R.id.cv_register_countdown, R.id.btn_register_commit, R.id.cbx_allow, R.id.txt_agreement})
+    @OnClick({R.id.cv_register_countdown, R.id.btn_register_commit,  R.id.txt_agreement})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cv_register_countdown:
@@ -131,28 +132,19 @@ public final class RegisterActivity extends MyActivity {
                 break;
             case R.id.btn_register_commit:
                 // 提交注册按钮
-                if(DoubleClickUtils.isDoubleClick()){
-                    return;
-                }
-                if(!mCbxAllow.isChecked()){
-                    ToastUtils.show("您还没有同意<注册协议>哦");
-                    return;
+                if (!DoubleClickUtils.isDoubleClick()) {
+                    if (mCbxAllow.isChecked()) {
+                        registereduser();
+                    } else {
+                        ToastUtils.show("您还没有同意<注册协议>哦");
+                    }
                 }
 
-
-                registereduser();
                 break;
 
-            case R.id.cbx_allow:
-                //阅读并同意注册协议
-                if(DoubleClickUtils.isDoubleClick()){
-                    return;
-                }
-                mCbxAllow.setChecked(!mCbxAllow.isChecked());
-                break;
             case R.id.txt_agreement:
                 //展示注册协议
-                startActivity(new Intent(this,AgreementActivity.class));
+                startActivity(new Intent(this, AgreementActivity.class));
                 break;
             default:
                 break;
@@ -162,7 +154,7 @@ public final class RegisterActivity extends MyActivity {
     void getmCountDode() {
         map.clear();
         map.put("Method", "Regcode");
-        map.put("Phonenumber", "86-" + mPhoneView.getText().toString());
+        map.put("Phonenumber", mPhoneView.getText().toString().trim());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {
