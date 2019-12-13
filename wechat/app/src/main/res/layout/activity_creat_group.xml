@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftIcon="@color/white"
+        app:leftTitle="取消"
+        app:rightTitle="完成"
+        app:title="选择联系人" />
+
+    <RelativeLayout
+
+        android:id="@+id/rl_sreach"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@+id/TitleBar"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="9dp"
+        android:background="@drawable/shape_fillgrayf6f6f6_bordernone_radius5"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/et_sreach"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:background="@color/transparent"
+            android:drawableStart="@mipmap/search"
+            android:drawableLeft="@mipmap/search"
+            android:drawablePadding="8.5dp"
+            android:gravity="center_vertical"
+            android:hint="@string/search"
+            android:imeOptions="actionSearch"
+            android:paddingStart="8.5dp"
+            android:paddingLeft="8.5dp"
+            android:singleLine="true"
+            android:textColor="@color/black_333333"
+            android:textColorHint="@color/gray_AAAAAA"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/rc_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_sreach">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

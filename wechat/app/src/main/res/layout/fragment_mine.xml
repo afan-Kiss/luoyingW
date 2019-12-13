@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".mine_chenmo.fragment.MineFragment">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/apptheme"
+        app:backButton="false"
+        app:barStyle="night"
+        app:lineSize="0dp"
+        app:rightIcon="@mipmap/icon_mine_saoma"
+        app:title="我的" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/bg_mine_top_rounded" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="-80dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/bg_rounded_15"
+                android:elevation="10dp"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="25dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_user_icon"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="关羽"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.hjq.widget.layout.SettingBar
+                            android:id="@+id/stb_userinfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:bar_leftHint="账号：0000"
+                            app:bar_leftSize="12dp"
+                            app:bar_lineSize="0dp"
+                            app:bar_rightIcon="@drawable/ico_go_black" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="LV.0"
+                            android:textColor="#F03737"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="等级" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.00"
+                            android:textColor="#F03737"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="金额" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="#F03737"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="积分" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.hjq.widget.layout.SettingBar
+                android:id="@+id/stb_qrcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:bar_leftIcon="@mipmap/qr_code"
+                app:bar_leftText="我的二维码"
+                app:bar_rightIcon="@drawable/ico_go_black" />
+
+            <com.hjq.widget.layout.SettingBar
+                android:id="@+id/stb_collect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bar_leftIcon="@mipmap/collection"
+                app:bar_leftText="我的收藏"
+                app:bar_rightIcon="@drawable/ico_go_black" />
+
+            <com.hjq.widget.layout.SettingBar
+                android:id="@+id/stb_dynamic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bar_leftIcon="@mipmap/dynamic"
+                app:bar_leftText="我的动态"
+                app:bar_rightIcon="@drawable/ico_go_black" />
+
+            <com.hjq.widget.layout.SettingBar
+                android:id="@+id/stb_token"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bar_leftIcon="@mipmap/token"
+                app:bar_leftText="我的令牌"
+                app:bar_rightIcon="@drawable/ico_go_black" />
+
+            <com.hjq.widget.layout.SettingBar
+                android:id="@+id/stb_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bar_leftIcon="@mipmap/setting"
+                app:bar_leftText="我的设置"
+                app:bar_rightIcon="@drawable/ico_go_black" />
+
+            <com.hjq.widget.layout.SettingBar
+                android:id="@+id/stb_update_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:bar_leftText="修改密码"
+                app:bar_rightIcon="@drawable/ico_go_black" />
+
+            <com.hjq.widget.layout.SettingBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:bar_leftText="表情"
+                app:bar_rightIcon="@drawable/ico_go_black" />
+
+            <com.hjq.widget.layout.SettingBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:bar_leftText="@string/setting_update"
+                app:bar_rightIcon="@drawable/ico_go_black" />
+
+            <View
+                style="@style/HorizontalLineStyle"
+                android:layout_height="10dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_qiehuan"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:text="切换账号"
+                android:textSize="17dp"
+                android:visibility="gone" />
+
+            <View
+                style="@style/HorizontalLineStyle"
+                android:layout_height="10dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_quit_login"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:text="退出登录"
+                android:textColor="#D32F2F"
+                android:textSize="17dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

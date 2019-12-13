@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:id="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:backButton="false"
+        app:barStyle="transparent"
+        app:leftIcon="@mipmap/ico_left"
+        app:rightColor="#FD9644"
+        app:rightSize="17sp"
+        app:rightTitle="发布"
+        app:title="好友圈"
+        app:titleColor="@color/praise_item_default"
+        app:titleSize="17sp"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <EditText
+                android:id="@+id/tv_dynamic_content"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="26.5dp"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="请输入此时此刻你的想法..."
+                android:textColor="#888888"
+                android:textSize="17sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_dynamic_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_dynamic_image">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="36.5dp"
+                android:background="#ffe2e5e7"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_dynamic_pression"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="21.5dp"
+                    android:layout_height="21.5dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ico_permission"/>
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:layout_toRightOf="@+id/iv_image"
+                    android:text="谁可以看:所有人"
+                    android:textColor="@color/praise_item_default"
+                    android:textSize="17sp"/>
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="14.5dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ico_go_black"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.activity.RegisterActivity">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:backButton="false"
+        app:barStyle="transparent"
+        app:leftColor="@color/colorAccent"
+        app:title="" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="89dp"
+        android:layout_gravity="center"
+        android:background="@drawable/login_logo" />
+
+
+    <com.hjq.widget.view.RegexEditText
+        android:id="@+id/et_register_phone"
+        style="@style/EditTextStyle"
+        android:layout_width="315dp"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:hint="@string/common_phone_input_hint"
+        android:inputType="textVisiblePassword"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:regexType="mobile" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_register_code"
+            style="@style/EditTextStyle"
+            android:layout_width="315dp"
+            android:layout_height="50dp"
+
+            android:layout_marginTop="20dp"
+
+            android:hint="@string/common_code_input_hint"
+            android:inputType="number"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <com.hjq.widget.view.CountdownView
+            android:id="@+id/cv_register_countdown"
+            style="@style/CountdownViewStyle"
+            android:layout_alignRight="@id/et_register_code"
+            android:layout_marginTop="26dp"
+            android:textColor="@color/windowBackground" />
+
+
+    </RelativeLayout>
+
+    <View style="@style/HorizontalLineStyle" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+
+        <com.hjq.widget.view.PasswordEditText
+            android:id="@+id/et_register_password1"
+            style="@style/EditTextStyle"
+            android:layout_width="315dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="30dp"
+            android:hint="@string/register_password_hint1"
+            android:maxLength="20"
+            android:maxLines="1" />
+    </RelativeLayout>
+
+    <View style="@style/HorizontalLineStyle" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+
+        <com.hjq.widget.view.PasswordEditText
+            android:id="@+id/et_register_password2"
+            style="@style/EditTextStyle"
+            android:layout_width="315dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/register_password_hint2"
+            android:maxLength="20"
+            android:maxLines="1" />
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_register_commit"
+        style="@style/ButtonStyle"
+        android:layout_width="315dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/register_title" />
+
+</LinearLayout>
+

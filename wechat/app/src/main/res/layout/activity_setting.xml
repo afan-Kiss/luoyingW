@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.SettingActivity">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/setting_title" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_change_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:bar_leftText="@string/change_password"
+        app:bar_rightIcon="@drawable/ico_go_black" />
+    app:bar_rightIcon="@drawable/ico_go_black"/>
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_setting_language"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        app:bar_leftText="@string/setting_language"
+        app:bar_rightIcon="@drawable/ico_go_black"
+        tools:bar_rightHint="@string/setting_language_simple" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_setting_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:bar_leftText="@string/setting_update"
+        app:bar_rightIcon="@drawable/ico_go_black" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_setting_agreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        app:bar_leftText="@string/setting_agreement"
+        app:bar_rightIcon="@drawable/ico_go_black" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_setting_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="@string/setting_about"
+        app:bar_rightIcon="@drawable/ico_go_black" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_setting_auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        app:bar_leftText="@string/setting_auto">
+
+        <com.hjq.widget.view.SwitchButton
+            android:id="@+id/sb_setting_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp" />
+
+    </com.hjq.widget.layout.SettingBar>
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_setting_cache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        app:bar_leftText="@string/setting_cache"
+        app:bar_rightIcon="@drawable/ico_go_black" />
+
+    <View
+        style="@style/HorizontalLineStyle"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/tv_qiehuan"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="切换账号"
+        android:textSize="17dp" />
+
+    <View
+        style="@style/HorizontalLineStyle"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/tv_quit_login"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="#D32F2F"
+        android:textSize="17dp" />
+
+</LinearLayout>

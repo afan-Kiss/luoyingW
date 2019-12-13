@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".guowenbin.activity.VirtualFriendActivity">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/vertical_ll"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/TitleBar"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/vertical_iv"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/vertical_ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vertical_ll"
+        android:layout_marginTop="-30dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/vertical_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 看看就好"
+            android:textColor="#ff333333"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/vertical_ll2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/vertical_ll1"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:id="@+id/vertical_tv"
+                style="@style/RectButtonStyle"
+                android:layout_width="1dp"
+                android:layout_height="44dp"
+                android:layout_marginRight="17dp"
+                android:layout_weight="1"
+                android:text="进入虚拟APP"
+                android:textColor="#333333" />
+
+            <TextView
+                android:id="@+id/vertical_tv1"
+                style="@style/ButtonStyle"
+                android:layout_width="1dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:text="点击关注" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>
