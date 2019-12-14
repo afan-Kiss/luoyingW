@@ -10,6 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.gson.Gson;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
@@ -47,9 +51,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
 /**
@@ -165,10 +166,10 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
             public void onItemClick(View view, MessageAdapter.ViewHolder viewHolder, int position, MessageListEntity entity, List<MessageListEntity> entityList)
             {
                 Log.i("shuai", "onItemClick");
-                 redNum = redNum - entity.messCount;
-                 Message msg = new Message();
-                 msg.what = redNum;
-                 mHandler.sendMessage(msg);
+                redNum = redNum - entity.messCount;
+                Message msg = new Message();
+                msg.what = redNum;
+                mHandler.sendMessage(msg);
                 entity.messCount = 0;
                 intent = new Intent(getActivity(), NewChatActivity.class);
                 //adapter.notifyDataSetChanged();
@@ -188,6 +189,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                     intent.putExtra("card", entity.card);//发送人唯一标识
                     intent.putExtra("nickName", entity.nickname);
                     intent.putExtra("Rtype", entity.rtype);
+                    intent.putExtra("imageUrl",entity.head_img);
                     MyApplication.mCurrentChatCard = entity.card;
                     mCurrentChatCardPositon = position;
                 }
@@ -283,18 +285,18 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
         super.onResume();
         getContent();
         if (TextUtils.isEmpty(MyApplication.mCurrentChatCard))return;
-            List<MessageListEntity> spList = DBHelper.getUserMessageList();
-            for (int i = 0; i <spList.size() ; i++) {
-                if (spList.get(i).card.equals(MyApplication.mCurrentChatCard)){
-                    MessageListEntity entity = spList.get(i);
-                    entity.messCount = 0;
-                    DBHelper.updateMessageList(entity);//去除未读数量
-                }
+        List<MessageListEntity> spList = DBHelper.getUserMessageList();
+        for (int i = 0; i <spList.size() ; i++) {
+            if (spList.get(i).card.equals(MyApplication.mCurrentChatCard)){
+                MessageListEntity entity = spList.get(i);
+                entity.messCount = 0;
+                DBHelper.updateMessageList(entity);//去除未读数量
             }
+        }
 
-            adapter.notifyDataSetChanged();
-            mCurrentChatCardPositon = -1;
-            MyApplication.mCurrentChatCard = null;
+        adapter.notifyDataSetChanged();
+        mCurrentChatCardPositon = -1;
+        MyApplication.mCurrentChatCard = null;
     }
 
 
@@ -330,7 +332,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                         MessageEntity entity = gson.fromJson(GetDate(response.body()), MessageEntity.class);
                         Gson gson = new Gson();
                         Log.d("adskjfadsf", "onSuccess: " + gson.toJson(entity) + "消息数量" +
-                                            entity.all_array.size());
+                                entity.all_array.size());
                         List<MessageListEntity> spList = null;
                         int messageCount = 0;
                         if (entity != null)
@@ -371,14 +373,14 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                             if (entity.all_array.get(i).rtype.equals("1"))
                                             {
                                                 if (entity.all_array.get(i).rtype.equals("1") &&
-                                                    spList.get(j).rtype.equals("1"))
+                                                        spList.get(j).rtype.equals("1"))
                                                 {
                                                     if (entity.all_array.get(i).card.equals(spList.get(j).card))
                                                     {
                                                         if (spList.get(j).messCount > 0)
                                                         {
-                                                              entity.all_array.get(i).messCount =
-                                                                spList.get(j).messCount + 1;
+                                                            entity.all_array.get(i).messCount =
+                                                                    spList.get(j).messCount + 1;
                                                         }
                                                         else
                                                         {
@@ -413,7 +415,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                             else if (entity.all_array.get(i).rtype.equals("2"))
                                             {
                                                 if (entity.all_array.get(i).rtype.equals("2") &&
-                                                    spList.get(j).rtype.equals("2"))
+                                                        spList.get(j).rtype.equals("2"))
                                                 {
                                                     if (entity.all_array.get(i).group_id.equals(spList.get(j).group_id))
                                                     {
@@ -464,12 +466,15 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
 
 
                                 }
+
+                                //列表无消息
                                 else
                                 {
+                                    String tempRval = entity.all_array.get(0).rval;
                                     if (entity.all_array.get(0).rclass.equals("1"))
                                     {
                                         entity.all_array.get(0).rval = RxEncryptTool.setDecrypt(entity.all_array
-                                                                                                        .get(0).rval);
+                                                .get(0).rval);
                                     }
                                     message = entity.all_array.get(0);
                                     message.messCount++;
@@ -501,7 +506,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                                     if (entity.all_array.get(i).rtype.equals("1"))
                                                     {
                                                         if (entity.all_array.get(i).rtype.equals("1") &&
-                                                            spList.get(j).rtype.equals("1"))
+                                                                spList.get(j).rtype.equals("1"))
                                                         {
                                                             if (entity.all_array.get(i).card.equals(spList.get(j).card))
                                                             {
@@ -509,7 +514,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                                                 {
                                                                     entity.all_array.get(i).messCount =
                                                                             spList.get(j).messCount +
-                                                                            1;
+                                                                                    1;
                                                                 }
                                                                 else
                                                                 {
@@ -534,7 +539,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                                     else if (entity.all_array.get(i).rtype.equals("2"))
                                                     {
                                                         if (entity.all_array.get(i).rtype.equals("2") &&
-                                                            spList.get(j).rtype.equals("2"))
+                                                                spList.get(j).rtype.equals("2"))
                                                         {
                                                             if (entity.all_array.get(i).group_id.equals(spList.get(j).group_id))
                                                             {
@@ -542,7 +547,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                                                 {
                                                                     entity.all_array.get(i).messCount =
                                                                             spList.get(j).messCount +
-                                                                            1;
+                                                                                    1;
                                                                 }
                                                                 else
                                                                 {
@@ -582,6 +587,10 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                                 }
                                             }
                                         }
+                                    }
+                                    else {
+                                        message.rval = tempRval;
+                                        addFrendMessage(message);
                                     }
 
                                 }
@@ -711,6 +720,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                 frendsMessageEntity.setUserName("");//用户电话
                 frendsMessageEntity.setToUserImage(entity.head_img);//用户头像
                 frendsMessageEntity.setToType("2");//消息类型 2 接收  1发送
+                frendsMessageEntity.setMessage_id(entity.message_id);
                 if (frendsMessageEntity.getToUid().equals(MyApplication.mCurrentChatCard)){
                     Intent intent = new Intent("android.intent.action.new_message");
                     intent.putExtra("MessageListEntity", frendsMessageEntity);
@@ -748,6 +758,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
 //                    intent.putExtra("MessageListEntity", groupMessageEntity);
 //                    getActivity().sendBroadcast(intent);
 //                }
+
                 DBHelper.insertMessageGroup(groupMessageEntity);
             }
         }
@@ -780,6 +791,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
         message.rtype = item.rtype;
         message.head_img = item.head_img;
         message.rval = item.rval;
+        message.message_id = item.message_id;
         //true 替换消息 添加消息
         if (isReplace)
         {
@@ -790,7 +802,14 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
         {
 
             DBHelper.insertMessageList(message);
+            List<MessageListEntity> spList = DBHelper.getUserMessageList();
+//            for (int i = 0; i < spList.size(); i++) {
+//                if (!TextUtils.isEmpty(spList.get(i).getMessage_id()) && spList.get(i).getMessage_id().equals(item.getMessage_id())){
+//                    return;
+//                }
+//            }
             //addFrendFirstMessage(item);
+
         }
 
     }
@@ -820,15 +839,15 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
     }
 
 
-     /**
-      *
-      * 语音播报
-      *
-      * **/
-     public void voicePrompt(){
-         MediaPlayer  mPlayer = MediaPlayer.create(getActivity(), R.raw.jieshouxiaoxi);
-         mPlayer.start();
-     }
+    /**
+     *
+     * 语音播报
+     *
+     * **/
+    public void voicePrompt(){
+        MediaPlayer  mPlayer = MediaPlayer.create(getActivity(), R.raw.jieshouxiaoxi);
+        mPlayer.start();
+    }
 
     private void reloadData(){
         getContent();
@@ -860,11 +879,12 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                 frendsMessageEntity.setUserName("");//用户电话
                 frendsMessageEntity.setToUserImage(entity.head_img);//用户头像
                 frendsMessageEntity.setToType("2");//消息类型 2 接收  1发送
-                if (frendsMessageEntity.getToUid().equals(MyApplication.mCurrentChatCard)){
-                    Intent intent = new Intent("android.intent.action.new_message");
-                    intent.putExtra("MessageListEntity", frendsMessageEntity);
-                    getActivity().sendBroadcast(intent);
-                }
+//                if (frendsMessageEntity.getToUid().equals(MyApplication.mCurrentChatCard)){
+//                    Intent intent = new Intent("android.intent.action.new_message");
+//                    intent.putExtra("MessageListEntity", frendsMessageEntity);
+//                    getActivity().sendBroadcast(intent);
+//                }
+
                 DBHelper.insertMessage(frendsMessageEntity);
 
             }

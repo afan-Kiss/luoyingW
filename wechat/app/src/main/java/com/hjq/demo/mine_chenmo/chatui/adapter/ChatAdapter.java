@@ -1,5 +1,7 @@
 package com.hjq.demo.mine_chenmo.chatui.adapter;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
@@ -8,16 +10,22 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
+import com.google.gson.Gson;
 import com.hjq.demo.R;
+import com.hjq.demo.api.API;
+import com.hjq.demo.common.MyApplication;
+import com.hjq.demo.daerxiansheng.sql.DBHelper;
+import com.hjq.demo.daerxiansheng.sql.FrendsMessageEntity;
+import com.hjq.demo.daerxiansheng.sql.MessageListEntity;
 import com.hjq.demo.mine_chenmo.activity.NewChatActivity;
 import com.hjq.demo.mine_chenmo.chatui.bean.AudioMsgBody;
 import com.hjq.demo.mine_chenmo.chatui.bean.FileMsgBody;
@@ -30,13 +38,24 @@ import com.hjq.demo.mine_chenmo.chatui.bean.TextMsgBody;
 import com.hjq.demo.mine_chenmo.chatui.bean.VideoMsgBody;
 import com.hjq.demo.mine_chenmo.chatui.util.GlideUtils;
 import com.hjq.demo.mine_chenmo.chatui.widget.BubbleImageView;
+import com.hjq.demo.model.ResponseBody;
+import com.hjq.demo.session.UserManager;
+import com.hjq.demo.util.ApiURLUtils;
+import com.hjq.demo.util.RxEncryptTool;
 import com.hjq.demo.util.TimeUtils;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
-
+    public Map<String, String> map = new HashMap<>();
+    Gson gson = new Gson();
+    PopupWindow popupWindow;
     private static final int TYPE_SEND_TEXT = 1;
     private static final int TYPE_RECEIVE_TEXT = 2;
     private static final int TYPE_SEND_IMAGE = 3;
@@ -104,38 +123,42 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
         setContent(helper, item);
         setStatus(helper, item);
         setOnClick(helper, item);
-        //setPopWindow(helper);
+        setPopWindow(helper,item);
     }
 
-    private void setPopWindow(BaseViewHolder helper) {
+    private void setPopWindow(BaseViewHolder helper,Message item) {
         // 长按弹出收藏、撤回等功能
-        LinearLayout chat_item_layout_content = helper.getView(R.id.chat_item_layout_content);
+        View chat_item_layout_content = helper.getView(R.id.chat_item_layout_content);
         RelativeLayout rlAudio = helper.getView(R.id.rlAudio);
         BubbleImageView bivPic = helper.getView(R.id.bivPic);
+        //文字
         if (null != chat_item_layout_content) {
             chat_item_layout_content.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    showPopWindow(v);
+                    showPopWindow(v,item,helper.getAdapterPosition());
                     return false;
                 }
             });
         }
 
-        if (null != rlAudio) {
-            rlAudio.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    showPopWindow(v);
-                    return false;
-                }
-            });
-        }
+//        //录音
+//        if (null != rlAudio) {
+//            rlAudio.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    showPopWindow(v,item);
+//                    return false;
+//                }
+//            });
+//        }
+
+        //图片
         if (null != bivPic) {
             bivPic.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    showPopWindow(v);
+                    showPopWindow(v,item,helper.getAdapterPosition());
                     return false;
                 }
             });
@@ -226,10 +249,71 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
 
     }
 
-    private void showPopWindow(View view) {
-        PopupWindow popupWindow;
+    private void showPopWindow(View view,Message item,int positon) {
+
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View contentview = inflater.inflate(R.layout.popwindow_chat, null);//自己的弹框布局
+        //收藏
+        TextView mPop_collect_tv = contentview.findViewById(R.id.pop_collect_tv);
+        mPop_collect_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (item.getMsgType().equals(MsgType.TEXT)){
+                    TextMsgBody msgBody = (TextMsgBody) item.getBody();
+                    messageColect(msgBody.getMessage(),1);
+                }else if (item.getMsgType().equals(MsgType.IMAGE)){
+                    ImageMsgBody msgBody = (ImageMsgBody) item.getBody();
+                    messageColect(msgBody.getThumbUrl(),2);
+                }
+
+            }
+        });
+        //复制
+        TextView mPop_copy_tv = contentview.findViewById(R.id.pop_copy_tv);
+        mPop_copy_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (item.getMsgType().equals(MsgType.TEXT)){
+                    TextMsgBody msgBody = (TextMsgBody) item.getBody();
+                    copy(msgBody.getMessage());
+                    if (popupWindow != null){
+                        popupWindow.dismiss();
+                        popupWindow = null;
+                    }
+                }
+
+            }
+        });
+        //删除
+        TextView mPop_delete_tv = contentview.findViewById(R.id.pop_delete_tv);
+        mPop_delete_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (popupWindow != null){
+                    popupWindow.dismiss();
+                    popupWindow = null;
+                }
+                //删除消息
+                List<FrendsMessageEntity> msgList = DBHelper.queryMessageAllAsc(getData().get(positon).getToUid());
+                for (int i = 0; i < msgList.size(); i++) {
+                    if (!TextUtils.isEmpty(msgList.get(i).getMessage_id())&&msgList.get(i).getMessage_id().equals(item.getMsgId())){
+                        MyApplication.getDaoSession().getFrendsMessageEntityDao().deleteInTx(msgList.get(i));
+                    }
+                }
+
+                getData().remove(positon);
+                notifyDataSetChanged();
+
+            }
+        });
+        //撤回
+        TextView mPop_recall_tv = contentview.findViewById(R.id.pop_recall_tv);
+        mPop_recall_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recallMessage(item.getMsgId(),positon);
+            }
+        });
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
         popupWindow = new PopupWindow(contentview, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
@@ -260,5 +344,171 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
             helper.addOnClickListener(R.id.bivPic);
         }
     }
+
+
+    //收藏消息
+    void messageColect(String cval,int ctype) {
+        map.clear();
+        map.put("Method", "Collection");
+        map.put("Cval", cval);
+        map.put("Ctype", ctype+"");
+        map.put("Fid", UserManager.getUser().getUser_id());
+        map.put("Sinkey", UserManager.getUser().getLoginkey());
+        map.put("Username", UserManager.getUser().getPhone_number());
+        OkGo.<String>post(API.BASE_API)
+                .params("Data", ApiURLUtils.GetDate(map))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.i("123123123", "onSuccess: " + GetDate(response.body()));
+                        if (CheckDate(response.body()).getState() != 1) {
+                            CheckDate(response.body()).getMsg();
+                            return;
+                        }
+                        if (popupWindow != null){
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        Toast.makeText(mContext,"服务器错误",Toast.LENGTH_SHORT).show();
+                        if (popupWindow != null){
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        if (popupWindow != null){
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                        }
+                    }
+                });
+
+
+    }
+    //撤回消息
+    void recallMessage(String messageID,int position) {
+        map.clear();
+        map.put("Method", "Dchat");
+        map.put("Rid", messageID);
+        map.put("Sinkey", UserManager.getUser().getLoginkey());
+        map.put("Username", UserManager.getUser().getPhone_number());
+        OkGo.<String>post(API.BASE_API)
+                .params("Data", ApiURLUtils.GetDate(map))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.i("123123123", "onSuccess: " + GetDate(response.body()));
+                        if (popupWindow != null){
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                        }
+                        if (CheckDate(response.body()).getState() != 1) {
+                           CheckDate(response.body()).getMsg();
+                            return;
+                        }
+
+                        //删除消息
+                        List<FrendsMessageEntity> msgList = DBHelper.queryMessageAllAsc(getData().get(position).getToUid());
+                        for (int i = 0; i < msgList.size(); i++) {
+                            if (!TextUtils.isEmpty(msgList.get(i).getMessage_id())&&msgList.get(i).getMessage_id().equals(messageID)){
+                                MyApplication.getDaoSession().getFrendsMessageEntityDao().deleteInTx(msgList.get(i));
+                            }
+                        }
+//
+//                        //更改消息列表内容
+//                        MessageListEntity message = new MessageListEntity();
+//                        if (position == getData().size()-1){
+//                            message.card = msgList.get(position -1).card;
+//                            message.currentuserCard = UserManager.getUser().getCard();
+//                            message.disturb = 0 + "";
+//                            message.duration = msgList.get(position -1).getDuration() + "";
+//                            message.group_id = "";
+//                            message.group_img = msgList.get(position -1).getToUserImage();
+//                            message.group_name = msgList.get(position -1).getToUserName();
+//                            message.message_id = "";
+//                            message.messCount = 0;
+//                            message.nickname = msgList.get(position -1).getUserName();
+//                            message.user_card = UserManager.getUser().getCard();
+//                            message.rclass = msgList.get(position -1);
+//                            message.rtime = TimeUtils.getTimeLong() + "";
+//                            message.rtype = Rtype;
+//                            message.head_img = msgList.get(position -1).;
+//                            message.rval = "";
+//                            message.message_id = CheckDate(response.body()).getRid();
+//                            List<MessageListEntity> spList = DBHelper.getUserMessageList();
+//                            for (int i = 0; i < spList.size(); i++) {
+//                                if (spList.get(i).getNickname().equals(message.nickname)) {
+//                                    DBHelper.deleteMessageList(spList.get(i).id);
+//                                }
+//                            }
+//
+//                            DBHelper.insertMessageList(message);
+//                        }
+
+                        getData().remove(position);
+                        notifyDataSetChanged();
+
+
+
+
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        Toast.makeText(mContext,"服务器错误",Toast.LENGTH_SHORT).show();
+                        if (popupWindow != null){
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        if (popupWindow != null){
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                        }
+                    }
+                });
+
+
+    }
+
+    public ResponseBody CheckDate(String date) {
+        ResponseBody responseBody = gson.fromJson(RxEncryptTool.unicodeDecode(new String(RxEncryptTool.base64Decode(date))), ResponseBody.class);
+
+        return responseBody;
+    }
+
+    public String GetDate(String date) {
+        return RxEncryptTool.unicodeDecode(new String(RxEncryptTool.base64Decode(date)));
+    }
+
+    //复制
+    private void copy(String data) {
+        // 获取系统剪贴板
+        ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+        // 创建一个剪贴数据集，包含一个普通文本数据条目（需要复制的数据）,其他的还有
+        // newHtmlText、
+        // newIntent、
+        // newUri、
+        // newRawUri
+        ClipData clipData = ClipData.newPlainText(null, data);
+
+        // 把数据集设置（复制）到剪贴板
+        clipboard.setPrimaryClip(clipData);
+    }
+
+
 
 }

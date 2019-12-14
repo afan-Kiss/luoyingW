@@ -25,6 +25,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.gson.Gson;
 import com.hjq.base.BaseActivity;
 import com.hjq.base.BaseDialog;
@@ -269,6 +276,11 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                             updateFaildMsg(mMessgae);
                             return;
                         }
+
+                        //当前列表消息设置id
+                        List<Message> dataList = mAdapter.getData();
+                        mAdapter.getData().get(dataList.size() -1).setMsgId(CheckDate(response.body()).getRid());
+                        mAdapter.getData().get(dataList.size() -1).setToUid(Form_uid);
                         //添加消息记录
                         FrendsMessageEntity frendsMessageEntity = new FrendsMessageEntity();
                         frendsMessageEntity.setContent(txt);//消息内容
@@ -283,8 +295,10 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                         frendsMessageEntity.setUserName("");//用户电话
                         frendsMessageEntity.setToUserImage(imageUrl);// 用户头像
                         frendsMessageEntity.setToType("1");//消息类型 1发送 2接收
+                        frendsMessageEntity.setMessage_id(CheckDate(response.body()).getRid());//消息id
                         mFrendsMessageEntity.add(frendsMessageEntity);
                         DBHelper.insertMessage(frendsMessageEntity);
+                        mMessgae.setMsgId(CheckDate(response.body()).getRid());
                         //发送成功
                         updateMsg(mMessgae);
 
@@ -307,6 +321,7 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                         message.rtype = Rtype;
                         message.head_img = imageUrl;
                         message.rval = txt;
+                        message.message_id = CheckDate(response.body()).getRid();
                         List<MessageListEntity> spList = DBHelper.getUserMessageList();
                         for (int i = 0; i < spList.size(); i++) {
                             if (spList.get(i).getNickname().equals(message.nickname)) {
@@ -559,6 +574,9 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                         TextMsgBody mTextMsgBody = new TextMsgBody();
                         mTextMsgBody.setMessage(msgList1.get(i).getContent());//文本消息内容
                         mMessgaeText.setBody(mTextMsgBody);
+                        mMessgaeText.setMsgId(msgList.get(i).message_id);
+                        mMessgaeText.setSentTime(msgList.get(i).getTime());
+                        mMessgaeText.setToUid(msgList.get(i).getToUid());
                         mReceiveMsgList.add(mMessgaeText);
                         break;
                     case 2: //图片消息
@@ -574,6 +592,9 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                         ImageMsgBody mImageMsgBody = new ImageMsgBody();
                         mImageMsgBody.setThumbUrl(msgList1.get(i).getContent());//图片地址
                         mMessgaeImage.setBody(mImageMsgBody);
+                        mMessgaeImage.setMsgId(msgList.get(i).message_id);
+                        mMessgaeImage.setSentTime(msgList.get(i).getTime());
+                        mMessgaeImage.setToUid(msgList.get(i).getToUid());
                         mReceiveMsgList.add(mMessgaeImage);
                         break;
                     case 3: //语音消息
@@ -589,6 +610,9 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                         mFileMsgBody.setLocalPath(msgList1.get(i).getContent());//语音地址
                         mFileMsgBody.setDuration(msgList1.get(i).getDuration());//语音时间
                         audioMessage.setBody(mFileMsgBody);
+                        audioMessage.setMsgId(msgList.get(i).getMessage_id());
+                        audioMessage.setSentTime(msgList.get(i).getTime());
+                        audioMessage.setToUid(msgList.get(i).getToUid());
                         mReceiveMsgList.add(audioMessage);
                         break;
 
@@ -615,6 +639,9 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                     mTextMsgBody.setMessage(msgList.get(i).getContent());//文本消息内容
                     mMessgaeText.setBody(mTextMsgBody);
                     mMessgaeText.setSentTime(msgList.get(i).getTime());
+                    mMessgaeText.setMsgId(msgList.get(i).getMessage_id());
+                    mMessgaeText.setToUid(msgList.get(i).getToUid());
+
                     mReceiveMsgList.add(mMessgaeText);
                     break;
                 case 2: //图片消息
@@ -632,6 +659,9 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                     mImageMsgBody.setThumbUrl(msgList.get(i).getContent());//图片地址
                     mMessgaeImage.setBody(mImageMsgBody);
                     //mImageMsgBody.setSentTime(msgList.get(i).getTime());
+                    mMessgaeImage.setMsgId(msgList.get(i).getMessage_id());
+                    mMessgaeImage.setToUid(msgList.get(i).getToUid());
+
                     mReceiveMsgList.add(mMessgaeImage);
                     break;
                 case 3: //语音消息
@@ -647,6 +677,9 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                     AudioMsgBody audioMsgBody = new AudioMsgBody();
                     audioMsgBody.setLocalPath(msgList.get(i).getContent());//语音地址
                     audioMsgBody.setDuration(msgList.get(i).getDuration());//语音时间
+                    audioMessage.setMsgId(msgList.get(i).getMessage_id());
+                    audioMessage.setToUid(msgList.get(i).getToUid());
+
                     audioMessage.setBody(audioMsgBody);
                     mReceiveMsgList.add(audioMessage);
                     break;
@@ -684,6 +717,8 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                     }
                     TextMsgBody mTextMsgBody = new TextMsgBody();
                     mTextMsgBody.setMessage(msgList.get(i).getContent());//文本消息内容
+                    mMessgaeText.setMsgId(msgList.get(i).getMessage_id());
+                    mMessgaeText.setToUid(msgList.get(i).getToUid());
                     mMessgaeText.setBody(mTextMsgBody);
                     mReceiveMsgList.add(mMessgaeText);
                     break;
@@ -700,6 +735,9 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                     ImageMsgBody mImageMsgBody = new ImageMsgBody();
                     mImageMsgBody.setThumbUrl(msgList.get(i).getContent());//图片地址
                     mMessgaeImage.setBody(mImageMsgBody);
+                    mMessgaeImage.setMsgId(msgList.get(i).getMessage_id());
+                    mMessgaeImage.setToUid(msgList.get(i).getToUid());
+
                     mReceiveMsgList.add(mMessgaeImage);
                     break;
                 case 3: //语音消息
@@ -715,6 +753,9 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                     mFileMsgBody.setLocalPath(msgList.get(i).getContent());//语音地址
                     mFileMsgBody.setDuration(msgList.get(i).getDuration());//语音时间
                     audioMessage.setBody(mFileMsgBody);
+                    audioMessage.setMsgId(msgList.get(i).getMessage_id());
+                    audioMessage.setToUid(msgList.get(i).getToUid());
+
                     mReceiveMsgList.add(audioMessage);
                     break;
 
@@ -787,11 +828,11 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                 sendTextMsg(mEtContent.getText().toString());
                 mEtContent.setText("");
                 break;
-             //照片
+            //照片
             case R.id.rlPhoto:
                 PictureFileUtil.openGalleryPic(NewChatActivity.this, REQUEST_CODE_IMAGE);
                 break;
-             //视频
+            //视频
             case R.id.rlVideo:
                 Intent video = new Intent(NewChatActivity.this, VoipActivity.class);
                 video.putExtra("Sinkey", UserManager.getUser().getLoginkey());
@@ -802,7 +843,7 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                 video.putExtra(VoipAudioActivity.ACTION, VoipAudioActivity.CALLING);
                 startActivity(video);
                 break;
-             //语音通话
+            //语音通话
             case R.id.rlVoice:
                 Intent voice = new Intent(NewChatActivity.this, VoipAudioActivity.class);
                 voice.putExtra("Sinkey", UserManager.getUser().getLoginkey());
@@ -850,7 +891,6 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                             });
 
             case R.id.rlCollection:
-                Log.e("haohai","111111111111111");
                 break;
             default:
                 break;
@@ -883,15 +923,10 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                         sendVedioMessage(media);
                     }
                     break;
-                    //相机
+                //相机
                 case REQUEST_CODE_CAMERA:
                     if (mFile.exists() && mFile.isFile()){
-                        // 图片选择结果回调
-//                        List<LocalMedia> selectListPic = PictureSelector.obtainMultipleResult(data);
-//                        for (LocalMedia media : selectListPic) {
-//                            LogUtil.d("获取图片路径成功:" + media.getPath());
-//                            sendImageMessage(media);
-//                        }
+                        sendCameraImageMessage(mFile.getAbsolutePath());
                     }
 
 //
@@ -1346,6 +1381,27 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    //相机图片消息
+    private void sendCameraImageMessage(final String media) {
+        if (!NetworkUtils.isNetworkAvailable(this)){
+            Toast.makeText(this,"当前网络不可用",Toast.LENGTH_SHORT).show();
+        }
+        final Message mMessgae = getBaseSendMessage(MsgType.IMAGE);
+        mMessgae.setHead_img(UserManager.getUser().getHead_img());
+        ImageMsgBody mImageMsgBody = new ImageMsgBody();
+        mImageMsgBody.setThumbUrl(media);
+        //mMessgae.setSentStatus(MsgSendStatus.SENDING);
+        mMessgae.setBody(mImageMsgBody);
+        //开始发送
+        mAdapter.addData(mMessgae);
+        mRvChat.scrollToPosition(mAdapter.getItemCount() - 1);
+        try {
+            uploadpicture(mImageMsgBody.getThumbUrl(), "2", 0, mMessgae);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

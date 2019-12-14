@@ -3,6 +3,7 @@ package com.hjq.demo.guowenbin.activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,6 +23,7 @@ import com.hjq.demo.model.QrcodeModel;
 import com.hjq.demo.session.UserManager;
 import com.hjq.demo.ui.activity.FriendCircleActivity;
 import com.hjq.demo.ui.activity.HomeActivity;
+import com.hjq.demo.ui.dialog.FriendMenuDialog;
 import com.hjq.demo.ui.dialog.MessageDialog;
 import com.hjq.demo.util.ApiURLUtils;
 import com.hjq.image.ImageLoader;
@@ -67,7 +69,6 @@ public class FrienProfileActivity extends MyActivity implements View.OnClickList
     TextView tv_user_name;
     @BindView(R.id.switch_btn)
     SwitchButton switch_btn;
-
     QrcodeModel qrcodeModel;
     String card, cards, black;
     String getUsername;
@@ -112,7 +113,7 @@ public class FrienProfileActivity extends MyActivity implements View.OnClickList
     @Override
     public void onRightClick(View v) {
         super.onRightClick(v);
-        Toast.makeText(this,"弹框",Toast.LENGTH_SHORT).show();
+        showPopwindow();
     }
 
     @Override
@@ -316,7 +317,6 @@ public class FrienProfileActivity extends MyActivity implements View.OnClickList
 
     }
 
-
     @Override
     public void onCheckedChanged(SwitchButton button, boolean isChecked) {
         Blacklist();
@@ -362,6 +362,58 @@ public class FrienProfileActivity extends MyActivity implements View.OnClickList
                 });
 
 
+    }
+
+    /**
+     * 更换背景图
+     */
+    public void showPopwindow() {
+        // 底部选择框
+        new FriendMenuDialog.Builder(getActivity())
+                // 设置点击按钮后不关闭对话框
+                //.setAutoDismiss(false)
+                .setList("删除","举报")
+                .setListener(new FriendMenuDialog.OnListener(){
+
+                    @Override
+                    public void onSelected(BaseDialog dialog, int position, Object o) {
+                        if (position == 0){
+                            new MessageDialog.Builder(getActivity())
+                                    // 标题可以不用填写
+                                    .setTitle("温馨提示")
+                                    // 内容必须要填写
+                                    .setMessage(getString(R.string.delete_friend))
+                                    // 确定按钮文本
+                                    .setConfirm(getString(R.string.common_confirm))
+                                    // 取消按钮
+                                    .setCancel(getString(R.string.common_cancel))
+                                    // 设置点击按钮后不关闭对话框
+                                    //.setAutoDismiss(false)
+                                    .setListener(new MessageDialog.OnListener() {
+                                        @Override
+                                        public void onConfirm(BaseDialog dialog) {
+                                            deletefriend();
+                                        }
+
+                                        @Override
+                                        public void onCancel(BaseDialog dialog) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+                        }else if (position == 1){
+                            startActivity(new Intent(FrienProfileActivity.this,ReportActivity.class));
+                        }
+                    }
+
+                    @Override
+                    public void onCancel(BaseDialog dialog) {
+
+                    }
+                })
+                .setGravity(Gravity.BOTTOM)
+                .setAnimStyle(BaseDialog.AnimStyle.BOTTOM)
+                .show();
     }
 }
 

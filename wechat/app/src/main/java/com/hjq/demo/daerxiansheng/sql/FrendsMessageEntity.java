@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Generated;
 
@@ -28,7 +29,7 @@ public class FrendsMessageEntity implements Parcelable {
     public int messageSendingType;//消息发送状态 1发送成功 2.发送失败 3.撤回 4.删除
     public String card;//当前用户唯一标识
     public String  toType;//发送接收消息类型 发送 1  接收 2
-
+    public String message_id;
 
     protected FrendsMessageEntity(Parcel in) {
         if (in.readByte() == 0) {
@@ -48,12 +49,13 @@ public class FrendsMessageEntity implements Parcelable {
         messageSendingType = in.readInt();
         card = in.readString();
         toType = in.readString();
+        message_id = in.readString();
     }
 
-    @Generated(hash = 1301117109)
+    @Keep
     public FrendsMessageEntity(Long id, String content, String toUserImage, int contentType,
             int messageType, long Duration, String toUid, String toUserName, long Time, String UserName,
-            int messageSendingType, String card, String toType) {
+            int messageSendingType, String card, String toType,String message_id) {
         this.id = id;
         this.content = content;
         this.toUserImage = toUserImage;
@@ -67,6 +69,7 @@ public class FrendsMessageEntity implements Parcelable {
         this.messageSendingType = messageSendingType;
         this.card = card;
         this.toType = toType;
+        this.message_id = message_id;
     }
 
     @Generated(hash = 468498583)
@@ -93,6 +96,7 @@ public class FrendsMessageEntity implements Parcelable {
         dest.writeInt(messageSendingType);
         dest.writeString(card);
         dest.writeString(toType);
+        dest.writeString(message_id);
     }
 
     @Override
@@ -202,6 +206,14 @@ public class FrendsMessageEntity implements Parcelable {
 
     public void setToType(String toType) {
         this.toType = toType;
+    }
+
+    public String getMessage_id() {
+        return message_id;
+    }
+
+    public void setMessage_id(String message_id) {
+        this.message_id = message_id;
     }
 
     public static final Creator<FrendsMessageEntity> CREATOR = new Creator<FrendsMessageEntity>() {

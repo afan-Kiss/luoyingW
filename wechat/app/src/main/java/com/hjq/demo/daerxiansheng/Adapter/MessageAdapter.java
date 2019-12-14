@@ -112,7 +112,7 @@ public class MessageAdapter extends RecyclerSwipeAdapter<MessageAdapter.ViewHold
             } else if (entity.rclass.equals("2")) {
                 viewHolder.textview_content.setText("[图片]");
             } else if (entity.rclass.equals("3")) {
-                viewHolder.textview_content.setText("[音频]");
+                viewHolder.textview_content.setText("[语音]");
             }
             if (!TextUtils.isEmpty(entity.rtime)) {
                 try {

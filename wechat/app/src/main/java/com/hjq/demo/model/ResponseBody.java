@@ -10,6 +10,7 @@ public class ResponseBody {
 
     private int state;
     private String msg;
+    private String rid;
 
     public int getState() {
         return state;
@@ -25,5 +26,13 @@ public class ResponseBody {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String getRid() {
+        return rid;
+    }
+
+    public void setRid(String rid) {
+        this.rid = rid;
     }
 }

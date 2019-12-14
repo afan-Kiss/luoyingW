@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     android:layout_gravity="center_horizontal">
 
-    <TextView
+    <TextView android:id="@+id/pop_collect_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -23,7 +23,7 @@
         android:layout_marginLeft="20dp"
         android:background="@color/white" />
 
-    <TextView
+    <TextView android:id="@+id/pop_copy_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -40,7 +40,7 @@
         android:layout_marginLeft="20dp"
         android:background="@color/white" />
 
-    <TextView
+    <TextView android:id="@+id/pop_delete_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -57,7 +57,7 @@
         android:layout_marginLeft="20dp"
         android:background="@color/white" />
 
-    <TextView
+    <TextView android:id="@+id/pop_recall_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

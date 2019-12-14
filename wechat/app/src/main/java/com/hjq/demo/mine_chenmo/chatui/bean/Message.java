@@ -12,6 +12,7 @@ public class Message {
     private String targetId;
     private String head_img;
     private long sentTime;
+    private String toUid;
 
     public String getHead_img() {
         return head_img;
@@ -84,5 +85,13 @@ public class Message {
 
     public void setSentTime(long sentTime) {
         this.sentTime = sentTime;
+    }
+
+    public String getToUid() {
+        return toUid;
+    }
+
+    public void setToUid(String toUid) {
+        this.toUid = toUid;
     }
 }

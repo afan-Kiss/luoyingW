@@ -10,6 +10,7 @@ import com.hjq.demo.common.MyLazyFragment;
 import com.hjq.demo.mine_chenmo.activity.QrcodeActivity;
 import com.hjq.demo.mine_chenmo.activity.UserInfoActivity;
 import com.hjq.demo.session.UserManager;
+import com.hjq.demo.ui.activity.CollectionActivity;
 import com.hjq.demo.ui.activity.LoginActivity;
 import com.hjq.demo.ui.activity.PasswordForgetActivity;
 import com.hjq.demo.ui.activity.ScanQrcodeActivity;
@@ -80,6 +81,7 @@ public class MineFragment extends MyLazyFragment {
                 startActivity(QrcodeActivity.class);
                 break;
             case R.id.stb_collect:
+                startActivity(CollectionActivity.class);
                 break;
             case R.id.stb_dynamic:
                 break;

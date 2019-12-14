@@ -37,6 +37,7 @@ public class FrendsMessageEntityDao extends AbstractDao<FrendsMessageEntity, Lon
         public final static Property MessageSendingType = new Property(10, int.class, "messageSendingType", false, "MESSAGE_SENDING_TYPE");
         public final static Property Card = new Property(11, String.class, "card", false, "CARD");
         public final static Property ToType = new Property(12, String.class, "toType", false, "TO_TYPE");
+        public final static Property Message_id = new Property(13, String.class, "message_id", false, "MESSAGE_ID");
     }
 
 
@@ -64,7 +65,8 @@ public class FrendsMessageEntityDao extends AbstractDao<FrendsMessageEntity, Lon
                 "\"USER_NAME\" TEXT," + // 9: UserName
                 "\"MESSAGE_SENDING_TYPE\" INTEGER NOT NULL ," + // 10: messageSendingType
                 "\"CARD\" TEXT," + // 11: card
-                "\"TO_TYPE\" TEXT);"); // 12: toType
+                "\"TO_TYPE\" TEXT," + // 12: toType
+                "\"MESSAGE_ID\" TEXT);"); // 13: message_id
     }
 
     /** Drops the underlying database table. */
@@ -121,6 +123,11 @@ public class FrendsMessageEntityDao extends AbstractDao<FrendsMessageEntity, Lon
         if (toType != null) {
             stmt.bindString(13, toType);
         }
+ 
+        String message_id = entity.getMessage_id();
+        if (message_id != null) {
+            stmt.bindString(14, message_id);
+        }
     }
 
     @Override
@@ -171,6 +178,11 @@ public class FrendsMessageEntityDao extends AbstractDao<FrendsMessageEntity, Lon
         if (toType != null) {
             stmt.bindString(13, toType);
         }
+ 
+        String message_id = entity.getMessage_id();
+        if (message_id != null) {
+            stmt.bindString(14, message_id);
+        }
     }
 
     @Override
@@ -193,7 +205,8 @@ public class FrendsMessageEntityDao extends AbstractDao<FrendsMessageEntity, Lon
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // UserName
             cursor.getInt(offset + 10), // messageSendingType
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // card
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // toType
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // toType
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13) // message_id
         );
         return entity;
     }
@@ -213,6 +226,7 @@ public class FrendsMessageEntityDao extends AbstractDao<FrendsMessageEntity, Lon
         entity.setMessageSendingType(cursor.getInt(offset + 10));
         entity.setCard(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
         entity.setToType(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setMessage_id(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
      }
     
     @Override

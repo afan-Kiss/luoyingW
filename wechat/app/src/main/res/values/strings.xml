@@ -199,6 +199,7 @@
     <string name="sign_out_group">确定删除并退出该群吗？</string>
     <string name="delete_friend">确定要删除该好友吗</string>
     <string name="msg_no_camera">没找到摄像头</string>
+    <string name="friend_report">举报</string>
     <string name="Verification">验证码输入错误</string>
     <string name="password_not_equal">密码两次输入不一致</string>
 </resources>
