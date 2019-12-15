@@ -34,6 +34,7 @@ import com.hjq.demo.helper.DoubleClickHelper;
 import com.hjq.demo.mine_chenmo.fragment.MineFragment;
 import com.hjq.demo.model.AcceptVideoModel;
 import com.hjq.demo.other.KeyboardWatcher;
+import com.hjq.demo.rong.RongVoice;
 import com.hjq.demo.session.Tezheng;
 import com.hjq.demo.session.UserManager;
 import com.hjq.demo.util.ApiURLUtils;
@@ -111,6 +112,10 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         setTab();
         tab.hideMsg(0);
+        new RongVoice(this).initRongRtcConnect(RongVoice.getToken());
+
+
+
     }
 
     @Override

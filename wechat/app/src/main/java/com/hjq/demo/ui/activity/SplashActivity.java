@@ -93,15 +93,24 @@ public final class SplashActivity extends MyActivity
      * {@link OnPermission}
      */
 
+
+    boolean isHasPermision = false;
+
     @Override
     public void hasPermission(List<String> granted, boolean isAll) {
+        if (isHasPermision) {
+            return;
+        }
 //        startActivityFinish(LoginActivity.class);
         if (RxSPTool.getContent(this, "isStart").trim().equals("")) {
-            startActivity(WelcomeActivity.class);
+            if (!isHasPermision) {
+                isHasPermision = true;
+                startActivity(WelcomeActivity.class);
+            }
         } else {
-            if (!TextUtils.isEmpty(PrefUtils.getString(this, PreKeys.USERNAME,""))){
+            if (!TextUtils.isEmpty(PrefUtils.getString(this, PreKeys.USERNAME, ""))) {
                 startActivityFinish(HomeActivity.class);
-            }else {
+            } else {
                 startActivityFinish(LoginActivity.class);
             }
 
@@ -112,6 +121,7 @@ public final class SplashActivity extends MyActivity
 
     @Override
     public void noPermission(List<String> denied, boolean quick) {
+        RxSPTool.putContent(this, "isStart", "");
         if (quick) {
             toast(R.string.common_permission_fail);
             XXPermissions.gotoPermissionSettings(SplashActivity.this, true);

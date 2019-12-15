@@ -240,4 +240,29 @@ dependencies {
     implementation files('libs/commons-codec-1.8.jar')
 
     implementation 'com.github.zhaolewei:ZlwAudioRecorder:v1.07'
+
+
+
+
+
+
+
+    implementation('cn.rongcloud.rtclib:rtc_lib:3.1.6')
+    implementation('io.rong.signalingkit:RongSignalingKit:1.0.0')
+    implementation('io.rong.signal:RongSignalingLib:3.0.0')
+    implementation('cn.rongcloud.sdk:im_kit:2.9.25') {
+        exclude group: 'com.github.bumptech.glide'
+    }
+    implementation('cn.rongcloud.sdk:im_lib:2.9.25')
+
+
+
+
+
+
+
+
+
+
+
 }

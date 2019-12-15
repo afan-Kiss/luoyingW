@@ -25,6 +25,11 @@ import com.zlw.main.recorderlib.RecordManager;
 import org.greenrobot.greendao.database.Database;
 
 import cat.ereza.customactivityoncrash.config.CaocConfig;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.signalingkit.RCSCallClient;
+
+import static com.hjq.demo.rong.RongVoice.appkey;
 
 /**
  * author : Android 轮子哥
@@ -59,6 +64,15 @@ public final class MyApplication extends Application {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "wechat.db", null);
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
+        initRongSdk(this);
+    }
+
+    private void initRongSdk(MyApplication myApplication) {
+        RongIM.init(this,appkey);
+        RongIMClient.init(this, appkey, false);
+//        RongIM.init(this,"bmdehs6pbamks");
+        RCSCallClient.getInstance().init(this);
+
 
     }
 

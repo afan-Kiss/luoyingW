@@ -50,6 +50,8 @@ public class UserInfoModel {
     private String loginkey;
     private String card;
     private String msg;
+    private String token;
+    private String username;
 
     public int getState() {
         return state;
@@ -225,5 +227,22 @@ public class UserInfoModel {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

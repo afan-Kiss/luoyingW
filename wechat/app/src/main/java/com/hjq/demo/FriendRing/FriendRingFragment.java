@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.hjq.bar.TitleBar;
 import com.hjq.base.BaseDialog;
 import com.hjq.demo.FriendRing.activity.DynamicReleaseActivity;
@@ -36,8 +39,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import cn.kevin.floatingeditor.EditorCallback;
 import cn.kevin.floatingeditor.EditorHolder;
@@ -50,6 +51,7 @@ import cn.kevin.floatingeditor.FloatEditorActivity;
  */
 public class FriendRingFragment extends MyLazyFragment {
 
+    private static final String TAG = "FriendRingFragment";
 
     @BindView(R.id.rv_dynamic)
     RecyclerView mRvDynamic;
@@ -59,7 +61,7 @@ public class FriendRingFragment extends MyLazyFragment {
     RelativeLayout bodyLayout;
     @BindView(R.id.titlebar)
     TitleBar titlebar;
-//    @BindView(R.id.scrollview)
+    //    @BindView(R.id.scrollview)
 //    NestedScrollView scrollview;
     //Adapter
     DynamicAdapter mDynamicAdapter;
@@ -103,12 +105,13 @@ public class FriendRingFragment extends MyLazyFragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-//                if(dy > 0){
-////                    iv_dynamic_add
-//                            titlebar.setVisibility(View.VISIBLE);
+//                if(dy > 100){
+//                    titlebar.setVisibility(View.VISIBLE);
 //                }else {
 //                    titlebar.setVisibility(View.GONE);
 //                }
+
+
             }
 
             @Override
@@ -119,6 +122,15 @@ public class FriendRingFragment extends MyLazyFragment {
                 } else {
                     ImageLoader.stopslide(getActivity());
                 }
+
+
+                Log.i(TAG, "onScrollStateChanged: " + recyclerView.getY());
+
+
+                int pos = linearLayoutManager.findFirstVisibleItemPosition();
+                int lastPos = linearLayoutManager.findLastVisibleItemPosition();
+                View nowView = linearLayoutManager.findViewByPosition(pos);
+                Log.i(TAG, "onScrollStateChanged: " + nowView.getY());
 
             }
         });
@@ -633,11 +645,13 @@ public class FriendRingFragment extends MyLazyFragment {
         dynamicList(false, 1, mUserName);
         super.onRestart();
     }
+
     @Override
     public void onRightClick(View v) {
         super.onRightClick(v);
         startActivity(DynamicReleaseActivity.class);
     }
+
     public static FriendRingFragment newInstance(String userName) {
         return new FriendRingFragment(userName);
     }
