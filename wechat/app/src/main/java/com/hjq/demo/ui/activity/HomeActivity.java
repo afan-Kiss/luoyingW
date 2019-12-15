@@ -5,6 +5,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -19,6 +25,9 @@ import com.hjq.demo.common.MyActivity;
 import com.hjq.demo.common.MyApplication;
 import com.hjq.demo.common.MyLazyFragment;
 import com.hjq.demo.daerxiansheng.Fragment.MessageFragment;
+import com.hjq.demo.daerxiansheng.sql.DBHelper;
+import com.hjq.demo.daerxiansheng.sql.FrendsMessageEntity;
+import com.hjq.demo.daerxiansheng.sql.MessageListEntity;
 import com.hjq.demo.guowenbin.Fragment.AddressBookFragment;
 import com.hjq.demo.helper.ActivityStackManager;
 import com.hjq.demo.helper.DoubleClickHelper;
@@ -45,10 +54,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 
 /**
@@ -240,7 +245,7 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
      * 全局心跳
      */
     private void Heartbeat() {
-        if (UserManager.getUser() == null||UserManager.getUser().getLoginkey() == null){
+        if (UserManager.getUser() == null || UserManager.getUser().getLoginkey() == null) {
             startActivity(LoginActivity.class);
             finish();
             return;
@@ -299,11 +304,11 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
                 for (int i = 0; i < list.size(); i++) {
                     switch (list.get(i)) {
                         case "1":
-                            if (MyApplication.ChatActivityIsTop){
+                            if (MyApplication.ChatActivityIsTop) {
                                 EventBus.getDefault().post("你的账号在其他设备登录");
                                 return;
                             }
-                            if (!mDialogIsShow){
+                            if (!mDialogIsShow) {
                                 mDialogIsShow = true;
                                 showESCDialog("你的账号在其他设备登录");//强制退出
                             }
@@ -317,6 +322,13 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
                             //更新消息列表
                             EventBus.getDefault().post("更新消息");
                             break;
+                        case "12":
+                            //更新消息列表
+                            EventBus.getDefault().post("撤回消息" + acceptVideoModel.getRid());
+
+//                            撤回消息处理
+                            撤回消息(acceptVideoModel.getRid());
+                            break;
                         default:
                             break;
                     }
@@ -325,6 +337,50 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
         }
 
     }
+
+
+    private void 撤回消息(String rid) {
+        // 撤回消息处理
+        try {
+//            new ChatAdapter(this, new ArrayList<>()).replaceReceviver(rid);
+            List<FrendsMessageEntity> frendsMessageEntities = DBHelper.queryFrendMessage();
+
+            for (FrendsMessageEntity frendsMessageEntity : frendsMessageEntities) {
+                if (frendsMessageEntity.getMessage_id().equals(rid)) {
+                    frendsMessageEntity.setContentType(1);
+                    frendsMessageEntity.setContent("");
+                    DBHelper.updateMessage(frendsMessageEntity);
+
+
+                    updateHomeFragment(frendsMessageEntity);
+
+                    break;
+                }
+            }
+
+
+            Toast.makeText(this, "首页处理撤回消息", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "首页处理撤回消息 失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateHomeFragment(FrendsMessageEntity frendsMessageEntity) {
+        if (frendsMessageEntity == null) {
+            Toast.makeText(this, "更新数据失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        for (int i = 0; i < DBHelper.getUserMessageList().size(); i++) {
+            if (frendsMessageEntity.toUid.equals(DBHelper.getUserMessageList().get(i).card)) {
+                MessageListEntity entity = DBHelper.getUserMessageList().get(i);
+                entity.setRval("对方撤回了一条消息");
+                entity.setRclass(1 + "");
+                MyApplication.getDaoSession().getMessageListEntityDao().update(entity);
+            }
+        }
+        EventBus.getDefault().post("更新消息");
+    }
+
 
     /**
      * 视频处理
@@ -393,15 +449,15 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
 
     }
 
-    Handler mHandler = new Handler(){
+    Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             int num = msg.what;
-            if (tab == null)return;
-            if (num == 0){
+            if (tab == null) return;
+            if (num == 0) {
                 tab.hideMsg(0);
-            }else {
+            } else {
                 tab.showMsg(0, num);
             }
 

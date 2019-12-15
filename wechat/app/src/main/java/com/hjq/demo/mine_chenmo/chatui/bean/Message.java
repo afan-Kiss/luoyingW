@@ -6,13 +6,16 @@ public class Message {
     private String uuid;
     private String msgId;
     private MsgType msgType;
-    private MsgBody body;
+    private MsgBody body=new MsgBody();
     private MsgSendStatus sentStatus;
     private String senderId;
     private String targetId;
     private String head_img;
     private long sentTime;
     private String toUid;
+    private String rclass;
+    private String rtype;//消息类型(1=好友 2=群组 3=虚拟APP)
+    private long frendsMessageId;//消息列表消息id
 
     public String getHead_img() {
         return head_img;
@@ -93,5 +96,29 @@ public class Message {
 
     public void setToUid(String toUid) {
         this.toUid = toUid;
+    }
+
+    public String getRclass() {
+        return rclass;
+    }
+
+    public void setRclass(String rclass) {
+        this.rclass = rclass;
+    }
+
+    public String getRtype() {
+        return rtype;
+    }
+
+    public void setRtype(String rtype) {
+        this.rtype = rtype;
+    }
+
+    public long getFrendsMessageId() {
+        return frendsMessageId;
+    }
+
+    public void setFrendsMessageId(long frendsMessageId) {
+        this.frendsMessageId = frendsMessageId;
     }
 }

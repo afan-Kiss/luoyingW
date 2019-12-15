@@ -3,13 +3,17 @@ package com.hjq.demo.mine_chenmo.chatui.adapter;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -43,6 +47,7 @@ import com.hjq.demo.session.UserManager;
 import com.hjq.demo.util.ApiURLUtils;
 import com.hjq.demo.util.RxEncryptTool;
 import com.hjq.demo.util.TimeUtils;
+import com.hjq.toast.ToastUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -121,44 +126,51 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, Message item) {
         setContent(helper, item);
+
         setStatus(helper, item);
         setOnClick(helper, item);
-        setPopWindow(helper,item);
+        setPopWindow(helper, item);
     }
 
-    private void setPopWindow(BaseViewHolder helper,Message item) {
+    private void setPopWindow(BaseViewHolder helper, Message item) {
         // 长按弹出收藏、撤回等功能
         View chat_item_layout_content = helper.getView(R.id.chat_item_layout_content);
         RelativeLayout rlAudio = helper.getView(R.id.rlAudio);
         BubbleImageView bivPic = helper.getView(R.id.bivPic);
         //文字
-        if (null != chat_item_layout_content) {
+        if (null != chat_item_layout_content && item.getBody() != null) {
             chat_item_layout_content.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    showPopWindow(v,item,helper.getAdapterPosition());
+                    try {
+                        if (((TextMsgBody) item.getBody()).getMessage().length() > 0) {
+                            showPopWindow(v, item, helper.getAdapterPosition());
+                        }
+                    } catch (Exception e) {
+                    }
+
                     return false;
                 }
             });
         }
 
 //        //录音
-//        if (null != rlAudio) {
-//            rlAudio.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    showPopWindow(v,item);
-//                    return false;
-//                }
-//            });
-//        }
+        if (null != rlAudio) {
+            rlAudio.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    showPopWindow(v, item, helper.getAdapterPosition());
+                    return false;
+                }
+            });
+        }
 
         //图片
         if (null != bivPic) {
             bivPic.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    showPopWindow(v,item,helper.getAdapterPosition());
+                    showPopWindow(v, item, helper.getAdapterPosition());
                     return false;
                 }
             });
@@ -204,12 +216,13 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
     private void setContent(BaseViewHolder helper, Message item) {
         // GlideUtils.loadChatImage(mContext, item.getHead_img(), (ImageView) helper.getView(R.id.chat_item_header));
         //ImageLoader.with(mContext).load(item.getHead_img()).into(helper.getView(R.id.chat_item_header));
-        GlideUtils.loadRoundedCornersImage(mContext, item.getHead_img(), helper.getView(R.id.chat_item_header));
+        ImageView imageView = helper.getView(R.id.chat_item_header);
+        GlideUtils.loadRoundedCornersImage(mContext, item.getHead_img(), imageView);
         TextView mTV_time = helper.getView(R.id.item_tv_time);
         long sendTime = item.getSentTime();
         long currentTime = System.currentTimeMillis();
         //如果大于5分钟
-        if (currentTime - sendTime > 5*60*1000){
+        if (currentTime - sendTime > 5 * 60 * 1000) {
             mTV_time.setVisibility(View.VISIBLE);
             mTV_time.setText(TimeUtils.getTimeString(item.getSentTime()));
         } else {
@@ -217,7 +230,68 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
         }
         if (item.getMsgType().equals(MsgType.TEXT)) {
             TextMsgBody msgBody = (TextMsgBody) item.getBody();
-            helper.setText(R.id.chat_item_content_text, msgBody.getMessage());
+            try {
+
+                if (msgBody == null || msgBody.getMessage() == null || msgBody.getMessage().length() == 0) {
+                    TextView txtTv = helper.getView(R.id.chat_item_content_text);
+                    txtTv.setGravity(Gravity.CENTER);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+                    txtTv.setLayoutParams(layoutParams);
+                    LinearLayout linearLayout = ((LinearLayout) txtTv.getParent());
+                    linearLayout.setBackgroundColor(Color.TRANSPARENT);
+                    RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    layoutParams1.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                    linearLayout.setLayoutParams(layoutParams1);
+
+                    if (item.getTargetId().equals("left")) {
+                        txtTv.setText("你撤回了一条消息");
+                    } else {
+                        txtTv.setText("对方撤回了一条消息");
+                    }
+
+                    txtTv.setBackground(null);
+                    GlideUtils.dismissImage(imageView);
+                } else {
+                    TextView txtTv = helper.getView(R.id.chat_item_content_text);
+                    txtTv.setText(msgBody.getMessage());
+                    if (item.getTargetId().equals("right")) {
+                        txtTv.setBackgroundResource(R.drawable.message_text_receive);
+                    } else {
+                        txtTv.setBackgroundResource(R.drawable.message_text_send);
+                    }
+
+
+                    if (item.getTargetId().equals("right")) {
+                        txtTv.setGravity(Gravity.CENTER);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+                        txtTv.setLayoutParams(layoutParams);
+                        LinearLayout linearLayout = ((LinearLayout) txtTv.getParent());
+                        linearLayout.setBackgroundColor(Color.TRANSPARENT);
+                        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        layoutParams1.addRule(RelativeLayout.RIGHT_OF, R.id.chat_item_header);
+                        linearLayout.setLayoutParams(layoutParams1);
+                    } else {
+                        txtTv.setGravity(Gravity.CENTER);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+                        txtTv.setLayoutParams(layoutParams);
+                        LinearLayout linearLayout = ((LinearLayout) txtTv.getParent());
+                        linearLayout.setBackgroundColor(Color.TRANSPARENT);
+                        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        layoutParams1.addRule(RelativeLayout.LEFT_OF, R.id.chat_item_header);
+                        linearLayout.setLayoutParams(layoutParams1);
+                    }
+
+
+                    //targetId = "left"
+                    GlideUtils.showImage(imageView);
+//                    helper.setText(R.id.chat_item_content_text, msgBody.getMessage());
+                }
+            } catch (Exception e) {
+                helper.setText(R.id.chat_item_content_text, "你撤回了一条消息");
+            }
         } else if (item.getMsgType().equals(MsgType.IMAGE)) {
             ImageMsgBody msgBody = (ImageMsgBody) item.getBody();
             if (TextUtils.isEmpty(msgBody.getThumbPath())) {
@@ -244,12 +318,14 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
             helper.setText(R.id.msg_tv_file_size, msgBody.getSize() + "B");
         } else if (item.getMsgType().equals(MsgType.AUDIO)) {
             AudioMsgBody msgBody = (AudioMsgBody) item.getBody();
-            helper.setText(R.id.tvDuration, msgBody.getDuration() + "\"");
+            helper.setText(R.id.tvDuration, msgBody == null ? "" + "\"" : msgBody.getDuration() + "\"");
+//            helper.setText(R.id.chat_item_content_text, "你撤回了一条消息");
+
         }
 
     }
 
-    private void showPopWindow(View view,Message item,int positon) {
+    private void showPopWindow(View view, Message item, int positon) {
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View contentview = inflater.inflate(R.layout.popwindow_chat, null);//自己的弹框布局
@@ -258,12 +334,12 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
         mPop_collect_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.getMsgType().equals(MsgType.TEXT)){
+                if (item.getMsgType().equals(MsgType.TEXT)) {
                     TextMsgBody msgBody = (TextMsgBody) item.getBody();
-                    messageColect(msgBody.getMessage(),1);
-                }else if (item.getMsgType().equals(MsgType.IMAGE)){
+                    messageColect(msgBody.getMessage(), 1);
+                } else if (item.getMsgType().equals(MsgType.IMAGE)) {
                     ImageMsgBody msgBody = (ImageMsgBody) item.getBody();
-                    messageColect(msgBody.getThumbUrl(),2);
+                    messageColect(msgBody.getThumbUrl(), 2);
                 }
 
             }
@@ -273,13 +349,14 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
         mPop_copy_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.getMsgType().equals(MsgType.TEXT)){
+                if (item.getMsgType().equals(MsgType.TEXT)) {
                     TextMsgBody msgBody = (TextMsgBody) item.getBody();
                     copy(msgBody.getMessage());
-                    if (popupWindow != null){
+                    if (popupWindow != null) {
                         popupWindow.dismiss();
                         popupWindow = null;
                     }
+                    ToastUtils.show("已复制");
                 }
 
             }
@@ -289,20 +366,24 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
         mPop_delete_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (popupWindow != null){
+                if (popupWindow != null) {
                     popupWindow.dismiss();
                     popupWindow = null;
                 }
                 //删除消息
                 List<FrendsMessageEntity> msgList = DBHelper.queryMessageAllAsc(getData().get(positon).getToUid());
                 for (int i = 0; i < msgList.size(); i++) {
-                    if (!TextUtils.isEmpty(msgList.get(i).getMessage_id())&&msgList.get(i).getMessage_id().equals(item.getMsgId())){
+                    if (TextUtils.isEmpty(msgList.get(i).getMessage_id()) && msgList.get(i).getMessage_id() == null) {
+                        MyApplication.getDaoSession().getFrendsMessageEntityDao().deleteInTx(msgList.get(i));
+                    }
+                    if (!TextUtils.isEmpty(msgList.get(i).getMessage_id()) && msgList.get(i).getMessage_id().equals(item.getMsgId())) {
                         MyApplication.getDaoSession().getFrendsMessageEntityDao().deleteInTx(msgList.get(i));
                     }
                 }
 
                 getData().remove(positon);
                 notifyDataSetChanged();
+                ToastUtils.show("已删除");
 
             }
         });
@@ -311,7 +392,7 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
         mPop_recall_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recallMessage(item.getMsgId(),positon);
+                recallMessage(item, positon);
             }
         });
         contentview.setFocusable(true); // 这个很重要
@@ -331,7 +412,7 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                 return false;
             }
         });
-        popupWindow.showAsDropDown(view, 0, -280);
+        popupWindow.showAsDropDown(view, -50, -160);
     }
 
 
@@ -347,11 +428,11 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
 
 
     //收藏消息
-    void messageColect(String cval,int ctype) {
+    void messageColect(String cval, int ctype) {
         map.clear();
         map.put("Method", "Collection");
         map.put("Cval", cval);
-        map.put("Ctype", ctype+"");
+        map.put("Ctype", ctype + "");
         map.put("Fid", UserManager.getUser().getUser_id());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Username", UserManager.getUser().getPhone_number());
@@ -365,7 +446,7 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                             CheckDate(response.body()).getMsg();
                             return;
                         }
-                        if (popupWindow != null){
+                        if (popupWindow != null) {
                             popupWindow.dismiss();
                             popupWindow = null;
                         }
@@ -374,8 +455,8 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Toast.makeText(mContext,"服务器错误",Toast.LENGTH_SHORT).show();
-                        if (popupWindow != null){
+                        Toast.makeText(mContext, "服务器错误", Toast.LENGTH_SHORT).show();
+                        if (popupWindow != null) {
                             popupWindow.dismiss();
                             popupWindow = null;
                         }
@@ -384,7 +465,7 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                     @Override
                     public void onFinish() {
                         super.onFinish();
-                        if (popupWindow != null){
+                        if (popupWindow != null) {
                             popupWindow.dismiss();
                             popupWindow = null;
                         }
@@ -393,11 +474,12 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
 
 
     }
+
     //撤回消息
-    void recallMessage(String messageID,int position) {
+    void recallMessage(Message mMessage, int position) {
         map.clear();
         map.put("Method", "Dchat");
-        map.put("Rid", messageID);
+        map.put("Rid", mMessage.getMsgId());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Username", UserManager.getUser().getPhone_number());
         OkGo.<String>post(API.BASE_API)
@@ -406,66 +488,25 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                     @Override
                     public void onSuccess(Response<String> response) {
                         Log.i("123123123", "onSuccess: " + GetDate(response.body()));
-                        if (popupWindow != null){
+                        if (popupWindow != null) {
                             popupWindow.dismiss();
                             popupWindow = null;
                         }
                         if (CheckDate(response.body()).getState() != 1) {
-                           CheckDate(response.body()).getMsg();
+                            CheckDate(response.body()).getMsg();
                             return;
                         }
 
-                        //删除消息
-                        List<FrendsMessageEntity> msgList = DBHelper.queryMessageAllAsc(getData().get(position).getToUid());
-                        for (int i = 0; i < msgList.size(); i++) {
-                            if (!TextUtils.isEmpty(msgList.get(i).getMessage_id())&&msgList.get(i).getMessage_id().equals(messageID)){
-                                MyApplication.getDaoSession().getFrendsMessageEntityDao().deleteInTx(msgList.get(i));
-                            }
-                        }
-//
-//                        //更改消息列表内容
-//                        MessageListEntity message = new MessageListEntity();
-//                        if (position == getData().size()-1){
-//                            message.card = msgList.get(position -1).card;
-//                            message.currentuserCard = UserManager.getUser().getCard();
-//                            message.disturb = 0 + "";
-//                            message.duration = msgList.get(position -1).getDuration() + "";
-//                            message.group_id = "";
-//                            message.group_img = msgList.get(position -1).getToUserImage();
-//                            message.group_name = msgList.get(position -1).getToUserName();
-//                            message.message_id = "";
-//                            message.messCount = 0;
-//                            message.nickname = msgList.get(position -1).getUserName();
-//                            message.user_card = UserManager.getUser().getCard();
-//                            message.rclass = msgList.get(position -1);
-//                            message.rtime = TimeUtils.getTimeLong() + "";
-//                            message.rtype = Rtype;
-//                            message.head_img = msgList.get(position -1).;
-//                            message.rval = "";
-//                            message.message_id = CheckDate(response.body()).getRid();
-//                            List<MessageListEntity> spList = DBHelper.getUserMessageList();
-//                            for (int i = 0; i < spList.size(); i++) {
-//                                if (spList.get(i).getNickname().equals(message.nickname)) {
-//                                    DBHelper.deleteMessageList(spList.get(i).id);
-//                                }
-//                            }
-//
-//                            DBHelper.insertMessageList(message);
-//                        }
-
-                        getData().remove(position);
-                        notifyDataSetChanged();
-
-
-
+                        mMessage.setMsgType(MsgType.TEXT);
+                        messageUpdate(mMessage, position);
 
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Toast.makeText(mContext,"服务器错误",Toast.LENGTH_SHORT).show();
-                        if (popupWindow != null){
+                        Toast.makeText(mContext, "服务器错误", Toast.LENGTH_SHORT).show();
+                        if (popupWindow != null) {
                             popupWindow.dismiss();
                             popupWindow = null;
                         }
@@ -474,7 +515,7 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                     @Override
                     public void onFinish() {
                         super.onFinish();
-                        if (popupWindow != null){
+                        if (popupWindow != null) {
                             popupWindow.dismiss();
                             popupWindow = null;
                         }
@@ -482,6 +523,81 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                 });
 
 
+    }
+
+    private void messageUpdate(Message mMessage, int position) {
+        mMessage.setBody(null);
+        mMessage.setMsgType(MsgType.TEXT);
+        updateMsg(mMessage);
+        //修改消息
+        List<FrendsMessageEntity> msgList = DBHelper.queryMessageAllAsc(getData().get(position).getToUid());
+        for (int i = 0; i < msgList.size(); i++) {
+            if (!TextUtils.isEmpty(msgList.get(i).getMessage_id()) && msgList.get(i).getMessage_id().equals(mMessage.getMsgId())) {
+                msgList.get(i).setContent("");
+                msgList.get(i).setContentType(1);
+                FrendsMessageEntity frendsMessageEntity = msgList.get(i);
+                MyApplication.getDaoSession().getFrendsMessageEntityDao().update(frendsMessageEntity);
+            }
+        }
+//
+//                        //更改消息列表内容
+        MessageListEntity message = new MessageListEntity();
+        if (position == getData().size() - 1) {
+//                            message.setId(mMessage.getFrendsMessageId());
+            message.card = msgList.get(position).card;
+            message.currentuserCard = UserManager.getUser().getCard();
+            message.disturb = 0 + "";
+            message.duration = msgList.get(position).getDuration() + "";
+            message.group_id = "";
+            message.group_img = msgList.get(position).getToUserImage();
+            message.group_name = msgList.get(position).getToUserName();
+            message.message_id = mMessage.getMsgId();
+            message.messCount = 0;
+
+            message.nickname = msgList.get(position).getUserName();
+            message.user_card = UserManager.getUser().getCard();
+            message.rclass = 1 + "";
+            message.rtime = TimeUtils.getTimeLong() + "";
+            message.rtype = mMessage.getRtype();
+            message.head_img = mMessage.getHead_img();
+            if (mMessage.getTargetId().equals("left")) {
+                message.rval = "对方回了一条消息";
+            } else {
+                message.rval = "你撤回了一条消息";
+            }
+
+            message.message_id = mMessage.getMsgId();
+            List<MessageListEntity> spList = DBHelper.getUserMessageList();
+            for (int i = 0; i < spList.size(); i++) {
+                if (spList.get(i).getNickname().equals(message.nickname)) {
+                    DBHelper.deleteMessageList(spList.get(i).id);
+                }
+                if (spList.get(i).getMessage_id() != null) {
+                    if (spList.get(i).getMessage_id().equals(message.getMessage_id())) {
+                        message.setId(spList.get(i).getId());
+//                                        DBHelper.updateMessageList(message);
+                    }
+                }
+            }
+
+
+        }
+
+        notifyDataSetChanged();
+    }
+
+    private void updateMsg(final Message mMessgae) {
+//        scrollToPosition(getItemCount() - 1);
+        int position = 0;
+        mMessgae.setSentStatus(MsgSendStatus.SENT);
+        //更新单个子条目
+        for (int i = 0; i < getData().size(); i++) {
+            Message mAdapterMessage = getData().get(i);
+            if (mMessgae.getUuid().equals(mAdapterMessage.getUuid())) {
+                position = i;
+            }
+        }
+        notifyItemChanged(position);
     }
 
     public ResponseBody CheckDate(String date) {
@@ -510,5 +626,25 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
     }
 
 
+    /**
+     * 對法撤回方法
+     *
+     * @param messageId 對法消息的id
+     */
+    public void replaceReceviver(String messageId) {
+        Message message = null;
+        int positon = -1;
+        try {
+            for (int i = 0; i < getData().size(); i++) {
+                if (messageId.equals(getData().get(i).getMsgId())) {
+                    message = getData().get(i);
+                    positon = i;
+                }
+            }
+            messageUpdate(message, positon);
+        } catch (Exception e) {
+            Log.i(TAG, "replaceReceviver: 撤回失敗---" + e.getMessage());
+        }
+    }
 
 }

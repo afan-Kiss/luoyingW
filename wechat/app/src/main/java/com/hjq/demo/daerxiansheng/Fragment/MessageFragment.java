@@ -62,8 +62,7 @@ import butterknife.BindView;
  * @date 2019-11-16.
  * 简述: <消息界面>
  */
-public class MessageFragment extends MyLazyFragment<HomeActivity>
-{
+public class MessageFragment extends MyLazyFragment<HomeActivity> {
 
     private MessageAdapter adapter;
     @BindView(R.id.recyclerView_content)
@@ -79,22 +78,20 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
     @BindView(R.id.swiper)
     SwipeRefreshLayout mSwipview;
     private int mCurrentChatCardPositon = -1;
-    public static MessageFragment newInstance()
-    {
+
+    public static MessageFragment newInstance() {
         return new MessageFragment();
         // Required empty public constructor
     }
 
 
     @Override
-    protected int getLayoutId()
-    {
+    protected int getLayoutId() {
         return R.layout.fragment_message;
     }
 
     @Override
-    protected void initView()
-    {
+    protected void initView() {
         //        inster();
         //        insertMessage();
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
@@ -102,39 +99,32 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
         adapter = new MessageAdapter(getActivity(), new ArrayList<>());
         recyclerview_content.setAdapter(adapter);
         getContent();
-        titlebar_title.setOnTitleBarListener(new OnTitleBarListener()
-        {
+        titlebar_title.setOnTitleBarListener(new OnTitleBarListener() {
             @Override
-            public void onLeftClick(View v)
-            {
+            public void onLeftClick(View v) {
 
             }
 
             @Override
-            public void onTitleClick(View v)
-            {
+            public void onTitleClick(View v) {
 
             }
 
             @Override
-            public void onRightClick(View v)
-            {
+            public void onRightClick(View v) {
                 //弹出popuwindow
                 AddUserDialog.Builder builder = new AddUserDialog.Builder()
                         .setContext(getActivity())
-                        .setOnClickListener(new AddUserDialog.onClickListener()
-                        {
+                        .setOnClickListener(new AddUserDialog.onClickListener() {
                             @Override
-                            public void setOnAddUserClick(AddUserDialog dialog)
-                            {
+                            public void setOnAddUserClick(AddUserDialog dialog) {
 
                                 startActivity(AddUserActivity.class);
                                 dialog.dismiss();
                             }
 
                             @Override
-                            public void setOnQrCodeClick(AddUserDialog dialog)
-                            {
+                            public void setOnQrCodeClick(AddUserDialog dialog) {
                                 Intent intent = new Intent(getActivity(), ScanQrcodeActivity.class);
                                 intent.putExtra("type", 1);
                                 startActivity(intent);
@@ -160,11 +150,9 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
             }
         });
         linearlayout_search.setOnClickListener(v -> startActivity(SearchActivity.class));
-        adapter.onItemClickListener(new MessageAdapter.setOnItemClick()
-        {
+        adapter.onItemClickListener(new MessageAdapter.setOnItemClick() {
             @Override
-            public void onItemClick(View view, MessageAdapter.ViewHolder viewHolder, int position, MessageListEntity entity, List<MessageListEntity> entityList)
-            {
+            public void onItemClick(View view, MessageAdapter.ViewHolder viewHolder, int position, MessageListEntity entity, List<MessageListEntity> entityList) {
                 Log.i("shuai", "onItemClick");
                 redNum = redNum - entity.messCount;
                 Message msg = new Message();
@@ -173,10 +161,9 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                 entity.messCount = 0;
                 intent = new Intent(getActivity(), NewChatActivity.class);
                 //adapter.notifyDataSetChanged();
-                if (entity.rtype.equals("1"))
-                {
+                if (entity.rtype.equals("1")) {
                     Log.i("shuai", "entity.rtype.equals(\"1\")");
-                    new Thread(){
+                    new Thread() {
                         @Override
                         public void run() {
                             super.run();
@@ -189,12 +176,10 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                     intent.putExtra("card", entity.card);//发送人唯一标识
                     intent.putExtra("nickName", entity.nickname);
                     intent.putExtra("Rtype", entity.rtype);
-                    intent.putExtra("imageUrl",entity.head_img);
+                    intent.putExtra("imageUrl", entity.head_img);
                     MyApplication.mCurrentChatCard = entity.card;
                     mCurrentChatCardPositon = position;
-                }
-                else if (entity.rtype.equals("2"))
-                {
+                } else if (entity.rtype.equals("2")) {
                     Log.i("shuai", "entity.rtype.equals(\"2\")");
                     intent.setClass(getActivity(), NewChatActivity.class);
                     intent.putExtra("card", entity.card);//群组唯一标识
@@ -211,8 +196,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
             }
 
             @Override
-            public void onDeleteMessageClick(View view, MessageAdapter.ViewHolder viewHolder, int position, MessageListEntity entity, List<MessageListEntity> entityList)
-            {
+            public void onDeleteMessageClick(View view, MessageAdapter.ViewHolder viewHolder, int position, MessageListEntity entity, List<MessageListEntity> entityList) {
                 Log.i("shuai", "onDeleteMessageClick");
                 adapter.closeDelete(viewHolder);
                 DBHelper.deleteMessageList(entity.id);
@@ -223,8 +207,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
             }
 
             @Override
-            public void onHeaderUserClick(View view, int position, MessageListEntity entity, List<MessageListEntity> entityList)
-            {
+            public void onHeaderUserClick(View view, int position, MessageListEntity entity, List<MessageListEntity> entityList) {
                 Log.i("shuai", "onItemClick");
                 redNum = redNum - entity.messCount;
                 Message msg = new Message();
@@ -233,10 +216,9 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                 entity.messCount = 0;
                 intent = new Intent(getActivity(), NewChatActivity.class);
                 //adapter.notifyDataSetChanged();
-                if (entity.rtype.equals("1"))
-                {
+                if (entity.rtype.equals("1")) {
                     Log.i("shuai", "entity.rtype.equals(\"1\")");
-                    new Thread(){
+                    new Thread() {
                         @Override
                         public void run() {
                             super.run();
@@ -249,9 +231,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                     intent.putExtra("card", entity.card);//发送人唯一标识
                     intent.putExtra("nickName", entity.nickname);
                     intent.putExtra("Rtype", entity.rtype);
-                }
-                else if (entity.rtype.equals("2"))
-                {
+                } else if (entity.rtype.equals("2")) {
                     Log.i("shuai", "entity.rtype.equals(\"2\")");
                     intent.setClass(getActivity(), NewChatActivity.class);
                     intent.putExtra("card", entity.card);//群组唯一标识
@@ -268,10 +248,8 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
     }
 
     @Subscribe
-    public void onEvent(String event)
-    {
-        if (event.equals("更新消息"))
-        {
+    public void onEvent(String event) {
+        if (event.equals("更新消息")) {
             //            Uchat();
             Log.i("shuai", "更新消息");
             getContent();
@@ -280,14 +258,13 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         getContent();
-        if (TextUtils.isEmpty(MyApplication.mCurrentChatCard))return;
+        if (TextUtils.isEmpty(MyApplication.mCurrentChatCard)) return;
         List<MessageListEntity> spList = DBHelper.getUserMessageList();
-        for (int i = 0; i <spList.size() ; i++) {
-            if (spList.get(i).card.equals(MyApplication.mCurrentChatCard)){
+        for (int i = 0; i < spList.size(); i++) {
+            if (spList.get(i).card.equals(MyApplication.mCurrentChatCard)) {
                 MessageListEntity entity = spList.get(i);
                 entity.messCount = 0;
                 DBHelper.updateMessageList(entity);//去除未读数量
@@ -300,11 +277,10 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
     }
 
 
-    void getContent()
-    {
-        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+    void getContent() {
+        if (!NetworkUtils.isNetworkAvailable(getActivity())) {
             List<MessageListEntity> spList = DBHelper.getUserMessageList();
-            if (spList != null && spList.size()>0){
+            if (spList != null && spList.size() > 0) {
                 adapter.setData(spList);
             }
             return;
@@ -317,81 +293,65 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
         map.put("Username", UserManager.getUser().getPhone_number());
         OkGo.<String>get(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
-                .execute(new StringCallback()
-                {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Response<String> response)
-                    {
-                        if (CheckDate(response.body()).getState() != 1)
-                        {
+                    public void onSuccess(Response<String> response) {
+                        if (CheckDate(response.body()).getState() != 1) {
                             Log.i("shuai", "更新消息getContent getState() != 1 return");
                             toast(CheckDate(response.body()).getMsg());
                             return;
                         }
 
                         MessageEntity entity = gson.fromJson(GetDate(response.body()), MessageEntity.class);
+                        for (MessageListEntity messageListEntity : entity.all_array) {
+                            messageListEntity.setMessage_id(messageListEntity.getId() + "");
+                        }
                         Gson gson = new Gson();
                         Log.d("adskjfadsf", "onSuccess: " + gson.toJson(entity) + "消息数量" +
                                 entity.all_array.size());
                         List<MessageListEntity> spList = null;
                         int messageCount = 0;
-                        if (entity != null)
-                        {
+                        if (entity != null) {
                             EventArgs<String> eventArgs = new EventArgs<>();
                             eventArgs.setEventType(EventType.Event_MessageCode);
                             eventArgs.setObject(entity.features_chat);
                             EventBus.getDefault().post(eventArgs);
-                            if (entity.all_array != null && entity.all_array.size() > 0)
-                            {
+                            if (entity.all_array != null && entity.all_array.size() > 0) {
                                 MessageListEntity newListEntity = null;
                                 MessageListEntity message = null;
                                 boolean isnull;
 
                                 voicePrompt();
                                 spList = DBHelper.getUserMessageList();
-                                if (spList != null && spList.size() > 0)
-                                {
+                                if (spList != null && spList.size() > 0) {
                                     //循环本地存储的消息和请求到的消息是否重复了重复了替换最新的消息
-                                    for (int i = 0; i < entity.all_array.size(); i++)
-                                    {
+                                    for (int i = 0; i < entity.all_array.size(); i++) {
                                         message = null;
                                         isnull = false;
                                         newListEntity = null;
                                         //添加本地聊天记录
-                                        if (entity.all_array.get(i).rtype.equals("1"))
-                                        {
+                                        if (entity.all_array.get(i).rtype.equals("1")) {
                                             addFrendMessage(entity.all_array.get(i));
-                                        }
-                                        else if (entity.all_array.get(i).rtype.equals("2"))
-                                        {
+                                        } else if (entity.all_array.get(i).rtype.equals("2")) {
                                             addGroupMessage(entity.all_array.get(i));
                                         }
 
-                                        for (int j = 0; j < spList.size(); j++)
-                                        {
+                                        for (int j = 0; j < spList.size(); j++) {
                                             //好友聊天去除重复消息
-                                            if (entity.all_array.get(i).rtype.equals("1"))
-                                            {
+                                            if (entity.all_array.get(i).rtype.equals("1")) {
                                                 if (entity.all_array.get(i).rtype.equals("1") &&
-                                                        spList.get(j).rtype.equals("1"))
-                                                {
-                                                    if (entity.all_array.get(i).card.equals(spList.get(j).card))
-                                                    {
-                                                        if (spList.get(j).messCount > 0)
-                                                        {
+                                                        spList.get(j).rtype.equals("1")) {
+                                                    if (entity.all_array.get(i).card.equals(spList.get(j).card)) {
+                                                        if (spList.get(j).messCount > 0) {
                                                             entity.all_array.get(i).messCount =
                                                                     spList.get(j).messCount + 1;
-                                                        }
-                                                        else
-                                                        {
+                                                        } else {
                                                             entity.all_array.get(i).messCount++;
                                                         }
                                                         entity.all_array.get(i).id = spList.get(j).id;
                                                         message = entity.all_array.get(i);
                                                         isnull = true;
-                                                    }
-                                                    else
-                                                    {
+                                                    } else {
                                                         isnull = false;
                                                         try {
                                                             newListEntity = entity.all_array.get(i).clone();
@@ -400,9 +360,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                                         }
                                                         newListEntity.messCount = 1;
                                                     }
-                                                }
-                                                else
-                                                {
+                                                } else {
                                                     isnull = false;
                                                     try {
                                                         newListEntity = entity.all_array.get(i).clone();
@@ -411,52 +369,36 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                                     }
                                                     newListEntity.messCount = 1;
                                                 }
-                                            }
-                                            else if (entity.all_array.get(i).rtype.equals("2"))
-                                            {
+                                            } else if (entity.all_array.get(i).rtype.equals("2")) {
                                                 if (entity.all_array.get(i).rtype.equals("2") &&
-                                                        spList.get(j).rtype.equals("2"))
-                                                {
-                                                    if (entity.all_array.get(i).group_id.equals(spList.get(j).group_id))
-                                                    {
-                                                        if (spList.get(j).messCount > 0)
-                                                        {
+                                                        spList.get(j).rtype.equals("2")) {
+                                                    if (entity.all_array.get(i).group_id.equals(spList.get(j).group_id)) {
+                                                        if (spList.get(j).messCount > 0) {
                                                             entity.all_array.get(i).messCount =
                                                                     spList.get(j).messCount + 1;
-                                                        }
-                                                        else
-                                                        {
+                                                        } else {
                                                             entity.all_array.get(i).messCount++;
                                                         }
                                                         entity.all_array.get(i).id = spList.get(j).id;
                                                         message = entity.all_array.get(i);
                                                         isnull = true;
-                                                    }
-                                                    else
-                                                    {
+                                                    } else {
                                                         isnull = false;
                                                         newListEntity = entity.all_array.get(i);
                                                         newListEntity.messCount = 1;
                                                     }
-                                                }
-                                                else
-                                                {
+                                                } else {
                                                     isnull = false;
                                                     newListEntity = entity.all_array.get(i);
                                                     newListEntity.messCount = 1;
                                                 }
                                             }
                                         }
-                                        if (message != null)
-                                        {
+                                        if (message != null) {
                                             addMessageList(message, message.messCount, true);
-                                        }
-                                        else
-                                        {
-                                            if (!isnull)
-                                            {
-                                                if (newListEntity != null)
-                                                {
+                                        } else {
+                                            if (!isnull) {
+                                                if (newListEntity != null) {
                                                     addMessageList(newListEntity, newListEntity.messCount, false);
                                                     spList = DBHelper.getUserMessageList();
                                                 }
@@ -468,11 +410,9 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                 }
 
                                 //列表无消息
-                                else
-                                {
+                                else {
                                     String tempRval = entity.all_array.get(0).rval;
-                                    if (entity.all_array.get(0).rclass.equals("1"))
-                                    {
+                                    if (entity.all_array.get(0).rclass.equals("1")) {
                                         entity.all_array.get(0).rval = RxEncryptTool.setDecrypt(entity.all_array
                                                 .get(0).rval);
                                     }
@@ -480,53 +420,38 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                     message.messCount++;
                                     message.currentuserCard = UserManager.getUser().getCard();
                                     addMessageList(message, message.messCount, false);
-                                    if (entity.all_array.size() > 1)
-                                    {
+                                    if (entity.all_array.size() > 1) {
                                         spList = DBHelper.getUserMessageList();
-                                        if (spList != null && spList.size() > 0)
-                                        {
+                                        if (spList != null && spList.size() > 0) {
                                             //循环本地存储的消息和请求到的消息是否重复了重复了替换最新的消息
-                                            for (int i = 0; i < entity.all_array.size(); i++)
-                                            {
+                                            for (int i = 0; i < entity.all_array.size(); i++) {
                                                 message = null;
                                                 isnull = false;
                                                 newListEntity = null;
                                                 //添加本地聊天记录
-                                                if (entity.all_array.get(i).rtype.equals("1"))
-                                                {
+                                                if (entity.all_array.get(i).rtype.equals("1")) {
                                                     addFrendMessage(entity.all_array.get(i));
-                                                }
-                                                else if (entity.all_array.get(i).rtype.equals("2"))
-                                                {
+                                                } else if (entity.all_array.get(i).rtype.equals("2")) {
                                                     addGroupMessage(entity.all_array.get(i));
                                                 }
-                                                for (int j = 0; j < spList.size(); j++)
-                                                {
+                                                for (int j = 0; j < spList.size(); j++) {
                                                     //好友聊天去除重复消息
-                                                    if (entity.all_array.get(i).rtype.equals("1"))
-                                                    {
+                                                    if (entity.all_array.get(i).rtype.equals("1")) {
                                                         if (entity.all_array.get(i).rtype.equals("1") &&
-                                                                spList.get(j).rtype.equals("1"))
-                                                        {
-                                                            if (entity.all_array.get(i).card.equals(spList.get(j).card))
-                                                            {
-                                                                if (spList.get(j).messCount > 0)
-                                                                {
+                                                                spList.get(j).rtype.equals("1")) {
+                                                            if (entity.all_array.get(i).card.equals(spList.get(j).card)) {
+                                                                if (spList.get(j).messCount > 0) {
                                                                     entity.all_array.get(i).messCount =
                                                                             spList.get(j).messCount +
                                                                                     1;
-                                                                }
-                                                                else
-                                                                {
+                                                                } else {
                                                                     entity.all_array.get(i).messCount++;
                                                                 }
                                                                 entity.all_array.get(i).id = spList.get(j).id;
                                                                 message = entity.all_array.get(i);
                                                                 isnull = true;
                                                             }
-                                                        }
-                                                        else
-                                                        {
+                                                        } else {
                                                             isnull = false;
                                                             try {
                                                                 newListEntity = entity.all_array.get(i).clone();
@@ -535,31 +460,22 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                                             }
                                                             newListEntity.messCount = 1;
                                                         }
-                                                    }
-                                                    else if (entity.all_array.get(i).rtype.equals("2"))
-                                                    {
+                                                    } else if (entity.all_array.get(i).rtype.equals("2")) {
                                                         if (entity.all_array.get(i).rtype.equals("2") &&
-                                                                spList.get(j).rtype.equals("2"))
-                                                        {
-                                                            if (entity.all_array.get(i).group_id.equals(spList.get(j).group_id))
-                                                            {
-                                                                if (spList.get(j).messCount > 0)
-                                                                {
+                                                                spList.get(j).rtype.equals("2")) {
+                                                            if (entity.all_array.get(i).group_id.equals(spList.get(j).group_id)) {
+                                                                if (spList.get(j).messCount > 0) {
                                                                     entity.all_array.get(i).messCount =
                                                                             spList.get(j).messCount +
                                                                                     1;
-                                                                }
-                                                                else
-                                                                {
+                                                                } else {
                                                                     entity.all_array.get(i).messCount++;
                                                                 }
                                                                 entity.all_array.get(i).id = spList.get(j).id;
                                                                 message = entity.all_array.get(i);
                                                                 isnull = true;
                                                             }
-                                                        }
-                                                        else
-                                                        {
+                                                        } else {
                                                             isnull = false;
                                                             try {
                                                                 newListEntity = entity.all_array.get(i).clone();
@@ -570,16 +486,11 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                                         }
                                                     }
                                                 }
-                                                if (message != null)
-                                                {
+                                                if (message != null) {
                                                     addMessageList(message, message.messCount, true);
-                                                }
-                                                else
-                                                {
-                                                    if (!isnull)
-                                                    {
-                                                        if (newListEntity != null)
-                                                        {
+                                                } else {
+                                                    if (!isnull) {
+                                                        if (newListEntity != null) {
                                                             addMessageList(newListEntity, newListEntity.messCount, false);
                                                             spList = DBHelper.getUserMessageList();
                                                         }
@@ -587,8 +498,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                                 }
                                             }
                                         }
-                                    }
-                                    else {
+                                    } else {
                                         message.rval = tempRval;
                                         addFrendMessage(message);
                                     }
@@ -602,9 +512,9 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                                 @Override
                                 public void run() {
                                     redNum = 0;
-                                    if (redNumList != null){
+                                    if (redNumList != null) {
                                         for (int i = 0; i < redNumList.size(); i++) {
-                                            redNum = redNum+redNumList.get(i).messCount;
+                                            redNum = redNum + redNumList.get(i).messCount;
                                         }
                                         Message msg = new Message();
                                         msg.what = redNum;
@@ -674,15 +584,13 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                     }
 
                     @Override
-                    public void onError(Response<String> response)
-                    {
+                    public void onError(Response<String> response) {
                         super.onError(response);
                         toast("服务器异常");
                     }
 
                     @Override
-                    public void onFinish()
-                    {
+                    public void onFinish() {
                         super.onFinish();
                         showComplete();
                     }
@@ -696,15 +604,11 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
      *
      * @param entity
      */
-    void addFrendMessage(MessageListEntity entity)
-    {
+    void addFrendMessage(MessageListEntity entity) {
         //添加消息记录
-        if (!TextUtils.isEmpty(entity.rtype))
-        {
-            if (entity.rtype.equals("1"))
-            {
-                if (entity.rclass.equals("1"))
-                {
+        if (!TextUtils.isEmpty(entity.rtype)) {
+            if (entity.rtype.equals("1")) {
+                if (entity.rclass.equals("1")) {
                     entity.rval = RxEncryptTool.setDecrypt(entity.rval);
                 }
                 FrendsMessageEntity frendsMessageEntity = new FrendsMessageEntity();
@@ -721,7 +625,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
                 frendsMessageEntity.setToUserImage(entity.head_img);//用户头像
                 frendsMessageEntity.setToType("2");//消息类型 2 接收  1发送
                 frendsMessageEntity.setMessage_id(entity.message_id);
-                if (frendsMessageEntity.getToUid().equals(MyApplication.mCurrentChatCard)){
+                if (frendsMessageEntity.getToUid().equals(MyApplication.mCurrentChatCard)) {
                     Intent intent = new Intent("android.intent.action.new_message");
                     intent.putExtra("MessageListEntity", frendsMessageEntity);
                     getActivity().sendBroadcast(intent);
@@ -731,14 +635,10 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
         }
     }
 
-    void addGroupMessage(MessageListEntity entity)
-    {
-        if (!TextUtils.isEmpty(entity.rtype))
-        {
-            if (entity.rtype.equals("2"))
-            {
-                if (entity.rclass.equals("1"))
-                {
+    void addGroupMessage(MessageListEntity entity) {
+        if (!TextUtils.isEmpty(entity.rtype)) {
+            if (entity.rtype.equals("2")) {
+                if (entity.rclass.equals("1")) {
                     entity.rval = RxEncryptTool.setDecrypt(entity.rval);
                 }
                 GroupMessageEntity groupMessageEntity = new GroupMessageEntity();
@@ -772,8 +672,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
      * @param messageCount
      * @param isReplace
      */
-    void addMessageList(MessageListEntity item, int messageCount, boolean isReplace)
-    {
+    void addMessageList(MessageListEntity item, int messageCount, boolean isReplace) {
         MessageListEntity message = new MessageListEntity();
         message.card = item.card;
         message.currentuserCard = UserManager.getUser().getCard();
@@ -793,13 +692,10 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
         message.rval = item.rval;
         message.message_id = item.message_id;
         //true 替换消息 添加消息
-        if (isReplace)
-        {
+        if (isReplace) {
             message.id = item.id;
             DBHelper.insertMessageListReplace(message);
-        }
-        else
-        {
+        } else {
 
             DBHelper.insertMessageList(message);
             List<MessageListEntity> spList = DBHelper.getUserMessageList();
@@ -816,15 +712,13 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
 
 
     @Override
-    protected void initData()
-    {
+    protected void initData() {
 
 
     }
 
     @Override
-    public void onEvent(EventArgs eventArgs)
-    {
+    public void onEvent(EventArgs eventArgs) {
 //        super.onEvent(eventArgs);
 //
 //        Log.i("shuai", "onEvent 495");
@@ -840,16 +734,14 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
 
 
     /**
-     *
      * 语音播报
-     *
-     * **/
-    public void voicePrompt(){
-        MediaPlayer  mPlayer = MediaPlayer.create(getActivity(), R.raw.jieshouxiaoxi);
+     **/
+    public void voicePrompt() {
+        MediaPlayer mPlayer = MediaPlayer.create(getActivity(), R.raw.jieshouxiaoxi);
         mPlayer.start();
     }
 
-    private void reloadData(){
+    private void reloadData() {
         getContent();
         mSwipview.setRefreshing(false);
     }
@@ -859,13 +751,10 @@ public class MessageFragment extends MyLazyFragment<HomeActivity>
      *
      * @param entity
      */
-    void addFrendFirstMessage(MessageListEntity entity)
-    {
+    void addFrendFirstMessage(MessageListEntity entity) {
         //添加消息记录
-        if (!TextUtils.isEmpty(entity.rtype))
-        {
-            if (entity.rtype.equals("1"))
-            {
+        if (!TextUtils.isEmpty(entity.rtype)) {
+            if (entity.rtype.equals("1")) {
                 FrendsMessageEntity frendsMessageEntity = new FrendsMessageEntity();
                 frendsMessageEntity.setContent(entity.rval);//消息内容
                 frendsMessageEntity.setContentType(Integer.parseInt(entity.rclass));//1=文本消息 2=图片 3=音频

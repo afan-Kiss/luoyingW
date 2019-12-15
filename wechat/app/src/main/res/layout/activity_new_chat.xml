@@ -44,10 +44,10 @@
             android:layout_height="50dp"
             android:background="#f3f3f3"
             android:focusable="true"
-            android:paddingLeft="8dp"
             android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:paddingLeft="8dp"
 
             >
 
@@ -76,7 +76,9 @@
                     android:minHeight="36dp"
                     android:paddingLeft="13dp"
                     android:singleLine="true"
-                    android:textSize="15sp" />
+                    android:textColor="#666"
+                    android:textSize="17sp"
+                    tools:text="test test" />
 
                 <com.hjq.demo.mine_chenmo.chatui.widget.RecordButton
                     android:id="@+id/btnAudio"
@@ -96,8 +98,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_margin="10px"
-                android:src="@mipmap/ic_emoji"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_emoji" />
 
             <ImageView
                 android:id="@+id/ivAdd"

@@ -3,6 +3,7 @@ package com.hjq.demo.mine_chenmo.chatui.util;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -55,6 +56,13 @@ public class GlideUtils {
 
 		Glide.with(mContext).load(imgUrl).apply(options).into(imageView);
 
+	}
+
+	public static void showImage(final ImageView imageView){
+		imageView.setVisibility(View.VISIBLE);
+	}
+	public static void dismissImage(final ImageView imageView){
+		imageView.setVisibility(View.INVISIBLE);
 	}
 
 

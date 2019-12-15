@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.multidex.MultiDex;
+
 import com.hjq.demo.BuildConfig;
 import com.hjq.demo.greenDao.DaoMaster;
 import com.hjq.demo.greenDao.DaoSession;
@@ -22,7 +24,6 @@ import com.zlw.main.recorderlib.RecordManager;
 
 import org.greenrobot.greendao.database.Database;
 
-import androidx.multidex.MultiDex;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
 
 /**
@@ -58,6 +59,7 @@ public final class MyApplication extends Application {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "wechat.db", null);
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
+
     }
 
     public void deleSQL() {

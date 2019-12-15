@@ -3,6 +3,7 @@ package com.hjq.demo.daerxiansheng.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
 import com.hjq.demo.daerxiansheng.sql.MessageListEntity;
 
 import java.util.List;
@@ -28,6 +29,8 @@ public class MessageEntity implements Parcelable {
     }
 
     public static class Entity implements Parcelable {
+        @SerializedName("id")
+        public String message_id;//消息id
         public String id;//消息id
         public String rval;//消息内容
         public String rtype;//消息类型(1=好友 2=群组 3=虚拟APP)
@@ -48,6 +51,7 @@ public class MessageEntity implements Parcelable {
         }
 
         protected Entity(Parcel in) {
+            message_id = in.readString();
             id = in.readString();
             rval = in.readString();
             rtype = in.readString();
@@ -67,6 +71,7 @@ public class MessageEntity implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(message_id);
             dest.writeString(id);
             dest.writeString(rval);
             dest.writeString(rtype);

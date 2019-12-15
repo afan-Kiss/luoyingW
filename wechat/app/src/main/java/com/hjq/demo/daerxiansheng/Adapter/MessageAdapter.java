@@ -1,18 +1,13 @@
 package com.hjq.demo.daerxiansheng.Adapter;
 
 import android.content.Context;
-import android.os.Build;
-import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,11 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.hjq.demo.R;
-import com.hjq.demo.common.MyRecyclerViewAdapter;
-import com.hjq.demo.daerxiansheng.Entity.MessageEntity;
 import com.hjq.demo.daerxiansheng.sql.MessageListEntity;
-import com.hjq.demo.guowenbin.adapter.AddFriendsAdapter;
-import com.hjq.demo.util.RxEncryptTool;
 import com.hjq.demo.util.TimeUtils;
 import com.hjq.image.ImageLoader;
 import com.shehuan.niv.Utils;
@@ -34,8 +25,6 @@ import com.shehuan.niv.Utils;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * Created by zhangrenwei on 2019-11-15 23:49.

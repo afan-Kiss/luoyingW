@@ -2,7 +2,6 @@ package com.hjq.demo.daerxiansheng.sql;
 
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.hjq.demo.common.MyApplication;
 import com.hjq.demo.greenDao.FrendsEntityDao;
@@ -777,9 +776,9 @@ public class DBHelper {
         TokenEntityDao dao = MyApplication.getDaoSession().getTokenEntityDao();
 
         //这里应该加上是否存在判断.?
-        for (TokenEntity entity1:
-             dao.loadAll()) {
-            if(entity.getKey().equals(entity1.getKey())){
+        for (TokenEntity entity1 :
+                dao.loadAll()) {
+            if (entity.getKey().equals(entity1.getKey())) {
                 ToastUtils.show("当前令牌已存在!");
                 return;
             }
@@ -878,6 +877,15 @@ public class DBHelper {
     public static List<MessageListEntity> getUserMessageList() {
         if (UserManager.getUser() == null || UserManager.getUser().getCard() == null) return null;
         return MyApplication.getDaoSession().getMessageListEntityDao().queryBuilder().where(MessageListEntityDao.Properties.CurrentuserCard.eq(UserManager.getUser().getCard())).list();
+    }
+
+    /**
+     * 更新当前用户消息列表
+     *
+     * @return
+     */
+    public static void updateUserMessageList(MessageListEntity updateEntity) {
+         MyApplication.getDaoSession().getMessageListEntityDao().update(updateEntity);
     }
 
 }
