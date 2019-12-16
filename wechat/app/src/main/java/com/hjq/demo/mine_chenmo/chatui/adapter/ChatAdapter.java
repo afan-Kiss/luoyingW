@@ -329,6 +329,9 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View contentview = inflater.inflate(R.layout.popwindow_chat, null);//自己的弹框布局
+
+
+        autoHiden(contentview, item);
         //收藏
         TextView mPop_collect_tv = contentview.findViewById(R.id.pop_collect_tv);
         mPop_collect_tv.setOnClickListener(new View.OnClickListener() {
@@ -415,6 +418,29 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
         popupWindow.showAsDropDown(view, -50, -160);
     }
 
+    private void autoHiden(View root, Message item) {
+
+
+        if (item.getMsgType().compareTo(MsgType.TEXT) == 0) {
+            //收藏
+            if (root.getId() == R.id.pop_collect_tv) {
+
+            } else if (root.getId() == R.id.pop_copy_tv) {
+
+            } else if (root.getId() == R.id.pop_delete_tv) {
+
+            } else if (root.getId() == R.id.pop_recall_tv) {
+
+            } else if (root.getId() == R.id.pop_recall_transt) {
+
+            }
+        }
+
+
+
+
+    }
+
 
     private void setOnClick(BaseViewHolder helper, Message item) {
         MsgBody msgContent = item.getBody();
@@ -455,7 +481,7 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Toast.makeText(mContext, R.string.error_network, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "服务器错误", Toast.LENGTH_SHORT).show();
                         if (popupWindow != null) {
                             popupWindow.dismiss();
                             popupWindow = null;
@@ -505,7 +531,7 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Toast.makeText(mContext, R.string.error_network, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "服务器错误", Toast.LENGTH_SHORT).show();
                         if (popupWindow != null) {
                             popupWindow.dismiss();
                             popupWindow = null;

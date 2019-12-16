@@ -1,10 +1,12 @@
 package com.hjq.demo.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.SurfaceView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -34,6 +36,7 @@ import com.hjq.demo.helper.DoubleClickHelper;
 import com.hjq.demo.mine_chenmo.fragment.MineFragment;
 import com.hjq.demo.model.AcceptVideoModel;
 import com.hjq.demo.other.KeyboardWatcher;
+import com.hjq.demo.rong.RongListener;
 import com.hjq.demo.rong.RongVoice;
 import com.hjq.demo.session.Tezheng;
 import com.hjq.demo.session.UserManager;
@@ -56,6 +59,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import io.rong.callkit.RongCallCustomerHandlerListener;
+import io.rong.callkit.RongCallKit;
+import io.rong.callkit.RongCallProxy;
+import io.rong.calllib.RongCallCommon;
+import io.rong.calllib.RongCallSession;
 
 /**
  * desc   : 主页界面
@@ -115,6 +123,52 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
         setTab();
         tab.hideMsg(0);
         new RongVoice(this).initRongRtcConnect(RongVoice.getToken());
+        RongCallKit.setCustomerHandlerListener(new RongCallCustomerHandlerListener() {
+            @Override
+            public List<String> handleActivityResult(int i, int i1, Intent intent) {
+                Log.i(TAG, "onCallMissed: ");
+                return null;
+            }
+
+            @Override
+            public void addMember(Context context, ArrayList<String> arrayList) {
+                Log.i(TAG, "onCallMissed: ");
+
+            }
+
+            @Override
+            public void onRemoteUserInvited(String s, RongCallCommon.CallMediaType callMediaType) {
+                Log.i(TAG, "onCallMissed: ");
+
+            }
+
+            @Override
+            public void onCallConnected(RongCallSession rongCallSession, SurfaceView surfaceView) {
+                Log.i(TAG, "onCallMissed: ");
+
+            }
+
+            @Override
+            public void onCallDisconnected(RongCallSession rongCallSession, RongCallCommon.CallDisconnectedReason callDisconnectedReason) {
+
+                if (callDisconnectedReason.name().equals("REJECT")){
+                    Log.i(TAG, "onCallMissed: ");
+                }
+                //rongCallSession.getSelfUserId()
+                // rongCallSession.getTargetId()
+                // rongCallSession.getMediaType().name()  VIDEO
+                EventBus.getDefault().post("语音聊天"+rongCallSession.getMediaType().name()+" "+rongCallSession.getTargetId() +" " +rongCallSession.getMediaType().name() + " "+       ((rongCallSession.getEndTime() - rongCallSession.getStartTime())/1000));
+
+
+
+            }
+
+            @Override
+            public void onCallMissed(RongCallSession rongCallSession, RongCallCommon.CallDisconnectedReason callDisconnectedReason) {
+
+                Log.i(TAG, "onCallMissed: ");
+            }
+        });
 
 
 
@@ -321,7 +375,7 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
                             }
                             break;
                         case "13"://视频
-                            video(acceptVideoModel);
+//                            video(acceptVideoModel);
                             break;
                         case "15"://新的评论
                             break;
@@ -472,4 +526,10 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
     };
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RongCallProxy.getInstance().setCallListener(new RongListener());
+
+    }
 }

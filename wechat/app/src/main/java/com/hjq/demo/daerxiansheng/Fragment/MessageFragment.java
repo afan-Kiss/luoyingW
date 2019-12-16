@@ -98,6 +98,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity> {
         recyclerview_content.setLayoutManager(manager);
         adapter = new MessageAdapter(getActivity(), new ArrayList<>());
         recyclerview_content.setAdapter(adapter);
+        refreshTitle();
         getContent();
         titlebar_title.setOnTitleBarListener(new OnTitleBarListener() {
             @Override
@@ -274,9 +275,12 @@ public class MessageFragment extends MyLazyFragment<HomeActivity> {
         adapter.notifyDataSetChanged();
         mCurrentChatCardPositon = -1;
         MyApplication.mCurrentChatCard = null;
-        titlebar_title.setTitle((NetworkUtils.isNetworkAvailable(getActivity()) ? "消息" : "消息(未连接)"));
+        refreshTitle();
     }
 
+    private void refreshTitle(){
+        titlebar_title.setTitle((NetworkUtils.isNetworkAvailable(getActivity()) ? "消息" : "消息(未连接)"));
+    }
 
     void getContent() {
         if (!NetworkUtils.isNetworkAvailable(getActivity())) {

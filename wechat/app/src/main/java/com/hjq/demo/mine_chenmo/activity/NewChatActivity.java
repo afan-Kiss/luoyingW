@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,10 +64,7 @@ import com.hjq.demo.other.EventBusManager;
 import com.hjq.demo.rong.RongVoice;
 import com.hjq.demo.session.UserManager;
 import com.hjq.demo.ui.activity.ImageActivity;
-import com.hjq.demo.ui.activity.LoginActivity;
-import com.hjq.demo.ui.dialog.MessageDialog;
 import com.hjq.demo.util.ApiURLUtils;
-import com.hjq.demo.util.RxActivityTool;
 import com.hjq.demo.util.RxEncryptTool;
 import com.hjq.demo.util.TimeUtils;
 import com.hjq.permissions.OnPermission;
@@ -97,8 +93,10 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.callkit.BaseCallActivity;
 
-public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+//BaseCallActivity
+public class NewChatActivity extends BaseCallActivity implements SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.llContent)
     LinearLayout mLlContent;
     @BindView(R.id.rv_chat_list)
@@ -420,6 +418,11 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                 mAdapter.replaceReceviver(event.replace("撤回消息", ""));
             }
             return;
+        }else if (event.contains("语音聊天")){
+            ToastUtils.show("语音聊天" + event);
+
+        }else if (event.contains("视频聊天")){
+            ToastUtils.show("视频聊天" + event);
         }
     }
 
@@ -792,7 +795,7 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
         mRvChat.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                /*if (bottom < oldBottom) {
+                if (bottom < oldBottom) {
                     mRvChat.post(new Runnable() {
                         @Override
                         public void run() {
@@ -801,7 +804,7 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                             }
                         }
                     });
-                }*/
+                }
             }
         });
         //点击空白区域关闭键盘
@@ -830,7 +833,7 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
     }
 
     @OnClick({R.id.btn_send, R.id.rlPhoto, R.id.rlVoice, R.id.rlVideo, R.id.rlLocation,
-            R.id.rlFile, R.id.common_toolbar_back, R.id.common_toolbar_add, R.id.rlCamera, R.id.rlCollection,R.id.ivAdd})
+            R.id.rlFile, R.id.common_toolbar_back, R.id.common_toolbar_add, R.id.rlCamera, R.id.rlCollection})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_send:
@@ -1254,33 +1257,33 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
 //        mRvChat.scrollToPosition(mAdapter.getItemCount() - 1);
 //    }
 
-    public void showESCDialog(String msg) {
-        DialogIsShow = true;
-        try {
-            MessageDialog.Builder builder = new MessageDialog.Builder(this).setTitle("提示") // 标题可以不用填写
-                    .setMessage(msg)
-                    .setConfirm("确定")
-                    .setCancelable(false)
-                    .setCancel(null) // 设置 null 表示不显示取消按钮
-                    .setAutoDismiss(false)
-                    .setListener(new MessageDialog.OnListener() {
-                        @Override
-                        public void onConfirm(BaseDialog dialog) {
-                            DialogIsShow = false;
-                            RxActivityTool.skipActivityAndFinishAll(NewChatActivity.this, LoginActivity.class);
-                        }
-
-                        @Override
-                        public void onCancel(BaseDialog dialog) {
-                            DialogIsShow = false;
-                        }
-                    });
-            messageDialog = builder.create();
-            messageDialog.show();
-        } catch (Exception e) {
-            DialogIsShow = false;
-        }
-    }
+//    public void showESCDialog(String msg) {
+//        DialogIsShow = true;
+//        try {
+//            MessageDialog.Builder builder = new MessageDialog.Builder(this).setTitle("提示") // 标题可以不用填写
+//                    .setMessage(msg)
+//                    .setConfirm("确定")
+//                    .setCancelable(false)
+//                    .setCancel(null) // 设置 null 表示不显示取消按钮
+//                    .setAutoDismiss(false)
+//                    .setListener(new MessageDialog.OnListener() {
+//                        @Override
+//                        public void onConfirm(BaseDialog dialog) {
+//                            DialogIsShow = false;
+//                            RxActivityTool.skipActivityAndFinishAll(NewChatActivity.this, LoginActivity.class);
+//                        }
+//
+//                        @Override
+//                        public void onCancel(BaseDialog dialog) {
+//                            DialogIsShow = false;
+//                        }
+//                    });
+//            messageDialog = builder.create();
+//            messageDialog.show();
+//        } catch (Exception e) {
+//            DialogIsShow = false;
+//        }
+//    }
 
     public class MyReceiver extends BroadcastReceiver {
 
