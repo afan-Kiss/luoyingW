@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hjq.base.BaseDialog;
 import com.hjq.demo.R;
@@ -327,6 +326,7 @@ public class FrienProfileActivity extends MyActivity implements View.OnClickList
 
     //拉黑用户
     void Blacklist() {
+
         map.clear();
         map.put("Method", "Blacklist");
         map.put("Card", card);

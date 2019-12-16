@@ -103,6 +103,7 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
+//            res.srcDirs = ['res']
         }
     }
     // 执行配置
@@ -226,43 +227,65 @@ dependencies {
 
     // 侧滑删除
     implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //数据库
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
     implementation 'com.nbsp:library:1.8'
     implementation 'org.greenrobot:greendao:3.2.2'
+
     // TabLayout库   https://github.com/H07000223/FlycoTabLayout
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
     //视频
     implementation files('libs/commons-codec-1.8.jar')
-
     implementation 'com.github.zhaolewei:ZlwAudioRecorder:v1.07'
 
+    //    implementation project(':CallLib')
+
+    //    implementation 'cn.rongcloud.rtclib:rtc_lib:3.1.6'
+
+    //    implementation('cn.rongcloud.rtclib:rtc_lib:3.0.0')
+//    implementation project(':CallKit')
+
+    //    api 'cn.rongcloud.sdk:im_kit:2.9.18'
+
+    //im_kit必须依赖im_lib，所以需要加入对应依赖
+
+    //    api 'cn.rongcloud.sdk:im_lib:2.9.18'
+//    implementation files('libs/CallEngine_Blink.jar')
+//    implementation files('libs/Rong_CallLib.jar')
+//    implementation files('libs/RongRTCLib.jar')
+//
+//    api('cn.rongcloud.sdk:im_kit:2.9.18') {
+//        exclude group: 'com.github.bumptech.glide'
+//    }
+//    api 'cn.rongcloud.sdk:im_lib:2.9.18'
 
 
 
 
-
-
-    implementation('cn.rongcloud.rtclib:rtc_lib:3.1.6')
+//    implementation('cn.rongcloud.rtclib:rtc_lib:3.1.6')
     implementation('io.rong.signalingkit:RongSignalingKit:1.0.0')
     implementation('io.rong.signal:RongSignalingLib:3.0.0')
-    implementation('cn.rongcloud.sdk:im_kit:2.9.25') {
+
+
+    implementation('cn.rongcloud.sdk:im_kit:2.10.1') {
         exclude group: 'com.github.bumptech.glide'
     }
-    implementation('cn.rongcloud.sdk:im_lib:2.9.25')
+    implementation('cn.rongcloud.sdk:im_lib:2.10.1')
 
 
-
-
-
-
-
-
-
+    api('cn.rongcloud.sdk:call_lib:2.10.1')
+            {
+                exclude group: 'com.github.bumptech.glide'
+            }
+//    api 'cn.rongcloud.sdk:call_kit:2.10.1'
+    api('cn.rongcloud.sdk:call_kit:2.10.1')
+    {
+        exclude group: 'com.github.bumptech.glide'
+    }
 
 
 }

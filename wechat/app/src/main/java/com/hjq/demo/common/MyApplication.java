@@ -27,7 +27,6 @@ import org.greenrobot.greendao.database.Database;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.signalingkit.RCSCallClient;
 
 import static com.hjq.demo.rong.RongVoice.appkey;
 
@@ -71,7 +70,9 @@ public final class MyApplication extends Application {
         RongIM.init(this,appkey);
         RongIMClient.init(this, appkey, false);
 //        RongIM.init(this,"bmdehs6pbamks");
-        RCSCallClient.getInstance().init(this);
+//        RCSCallClient.getInstance().init(this);
+
+
 
 
     }

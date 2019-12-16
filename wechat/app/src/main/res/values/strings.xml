@@ -3,7 +3,7 @@
 
     <!-- 通用的 -->
 <!--    <string name="common_phone_input_hint">请输入TG号/手机号/邮箱</string>-->
-    <string name="common_phone_input_hint">请输入手机号</string>
+    <string name="common_phone_input_hint">请输入TG号/手机号/邮箱</string>
     <string name="common_phone_input_error">手机号输入不正确</string>
 
     <string name="common_password_input_error">请输入您的密码</string>

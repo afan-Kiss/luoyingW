@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.view.WindowManager;
 
 /**
  *    author : Android 轮子哥
@@ -51,6 +50,25 @@ public final class KeyboardWatcher implements
 
     @Override
     public void onGlobalLayout() {
+        //获取当前根视图在屏幕上显示的大小
+        final View decorView = mActivity.getWindow().getDecorView();
+        Rect rect = new Rect();
+        decorView.getWindowVisibleDisplayFrame(rect);
+        //计算出可见屏幕的高度
+        int displayHight = rect.bottom - rect.top;
+        //获得屏幕整体的高度
+        int hight = decorView.getHeight();
+        //获得键盘高度
+        int keyboardHeight = hight - displayHight;
+        boolean visible = (double) displayHight / hight < 0.8;
+        if (mListeners != null) {
+            if(visible){
+                mListeners.onSoftKeyboardOpened(keyboardHeight);
+            }else{
+                mListeners.onSoftKeyboardClosed();
+            }
+        }
+/*
         final Rect r = new Rect();
         //r will be populated with the coordinates of your view that area still visible.
         mContentView.getWindowVisibleDisplayFrame(r);
@@ -73,7 +91,7 @@ public final class KeyboardWatcher implements
             if (mListeners != null) {
                 mListeners.onSoftKeyboardClosed();
             }
-        }
+        }*/
     }
 
     /**

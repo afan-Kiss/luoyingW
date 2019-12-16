@@ -45,20 +45,18 @@
         android:layout_height="wrap_content"
         app:bar_leftText="昵称"
         app:bar_rightIcon="@drawable/ico_go_black"
-        app:bar_rightText="关羽" />
+        app:bar_rightText="default" />
 
     <com.hjq.widget.layout.SettingBar
         android:id="@+id/stb_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bar_leftText="账号(手机号)"
-        tools:bar_rightHint="17789712035" />
+        app:bar_leftText="账号"
+        tools:bar_rightHint="default" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
     </RelativeLayout>
 
     <com.hjq.widget.layout.SettingBar
@@ -73,8 +71,7 @@
         android:id="@+id/stb_geqian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bar_leftText="个签"
+        app:bar_leftText="个性签名"
         app:bar_rightIcon="@drawable/ico_go_black"
         app:bar_rightText="" />
-
 </LinearLayout>

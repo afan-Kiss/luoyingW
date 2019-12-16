@@ -134,7 +134,7 @@ public class CreatGroupActivity extends MyActivity {
         map.put("Method", "Rgroup");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Username", UserManager.getUser().getPhone_number());
-        map.put("Groupname", "chuishen");
+        map.put("Groupname", "TG one");
         map.put("Groupimg ", url);
         if (idList.size() > 0) {
             StringBuffer path = new StringBuffer();

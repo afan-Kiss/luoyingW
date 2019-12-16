@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="扫一扫上面的二维码图案，加我微信"
+        android:text="扫一扫上面的二维码，加我好友"
         android:textColor="#666666"
         android:textSize="12dp" />
 

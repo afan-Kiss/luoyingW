@@ -792,7 +792,7 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
         mRvChat.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (bottom < oldBottom) {
+                /*if (bottom < oldBottom) {
                     mRvChat.post(new Runnable() {
                         @Override
                         public void run() {
@@ -801,7 +801,7 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
                             }
                         }
                     });
-                }
+                }*/
             }
         });
         //点击空白区域关闭键盘
@@ -830,7 +830,7 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
     }
 
     @OnClick({R.id.btn_send, R.id.rlPhoto, R.id.rlVoice, R.id.rlVideo, R.id.rlLocation,
-            R.id.rlFile, R.id.common_toolbar_back, R.id.common_toolbar_add, R.id.rlCamera, R.id.rlCollection})
+            R.id.rlFile, R.id.common_toolbar_back, R.id.common_toolbar_add, R.id.rlCamera, R.id.rlCollection,R.id.ivAdd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_send:
@@ -854,6 +854,10 @@ public class NewChatActivity extends AppCompatActivity implements SwipeRefreshLa
 
                 RongVoice.startVideo(this, getIntent().getStringExtra("card"));
                 RongVoice.log(getIntent().getStringExtra("card"));
+
+
+
+
 
                 break;
             //语音通话

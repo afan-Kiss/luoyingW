@@ -1,4 +1,4 @@
-include ':app', ':IM'
+include ':app', ':IM', ':CallKit', ':CallLib'
 include ':floatingeditor'
 include ':base'
 include ':widget'

@@ -89,6 +89,8 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
      */
     private BaseFragmentAdapter<MyLazyFragment> mPagerAdapter;
 
+    private static final String TAG = "HomeActivity";
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_home;

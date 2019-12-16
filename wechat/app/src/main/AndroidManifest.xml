@@ -176,7 +176,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" /> <!-- 朋友圈发布动态 -->
         <activity android:name=".guowenbin.activity.UserInformationActivity" />
         <activity android:name=".FriendRing.activity.SelectContactActivity" />
-        <activity android:name=".mine_chenmo.activity.NewChatActivity" />
+        <activity android:name=".mine_chenmo.activity.NewChatActivity"/>
         <activity android:name=".guowenbin.activity.CreatGroupActivity" />
         <activity android:name=".mine_chenmo.activity.VideoActivity" />
         <activity android:name=".mine_chenmo.activity.VoiceActivity" />
@@ -185,7 +185,10 @@
         <activity android:name=".ui.activity.TokenActivity" />
         <activity
             android:name=".ui.activity.AgreementActivity"
-            android:screenOrientation="portrait"/><!-- 注册协议 -->
+            android:screenOrientation="portrait"/>
+        <activity android:name=".rong.JoinRoom" />
+        <activity android:name=".ui.activity.CollectionActivity" /><!-- 注册协议 -->
+        <activity android:name=".guowenbin.activity.ReportActivity"/>
 
         <service android:name=".videosdk.KeepLiveService" />
         <service android:name="com.zlw.main.recorderlib.recorder.RecordService" />

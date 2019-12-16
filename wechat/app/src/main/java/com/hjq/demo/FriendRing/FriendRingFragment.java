@@ -123,14 +123,27 @@ public class FriendRingFragment extends MyLazyFragment {
                     ImageLoader.stopslide(getActivity());
                 }
 
+                // -280.0
+                // -371.0
 
-                Log.i(TAG, "onScrollStateChanged: " + recyclerView.getY());
-
-
-                int pos = linearLayoutManager.findFirstVisibleItemPosition();
-                int lastPos = linearLayoutManager.findLastVisibleItemPosition();
-                View nowView = linearLayoutManager.findViewByPosition(pos);
-                Log.i(TAG, "onScrollStateChanged: " + nowView.getY());
+//                if (recyclerView.getY() < Math.abs(300)) {
+//                    View view = (View) titlebar.getParent();
+//                    view.setAlpha(Math.abs(recyclerView.getY()) / 300f);
+//                    Log.i(TAG, "onScrollStateChanged: alpha"+Math.abs(recyclerView.getY()) / 300f);
+//                } else {
+//                    View view = (View) titlebar.getParent();
+//                    view.setAlpha(1.0f);
+//                    Log.i(TAG, "onScrollStateChanged: alpha"+Math.abs(recyclerView.getY()) / 300f);
+//
+//                }
+//
+//                Log.i(TAG, "onScrollStateChanged: " + recyclerView.getY());
+//
+//
+//                int pos = linearLayoutManager.findFirstVisibleItemPosition();
+//                int lastPos = linearLayoutManager.findLastVisibleItemPosition();
+//                View nowView = linearLayoutManager.findViewByPosition(pos);
+//                Log.i(TAG, "onScrollStateChanged: " + nowView.getY());
 
             }
         });
