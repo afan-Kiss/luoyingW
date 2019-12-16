@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:name="android:paddingLeft">15dp</item>
+    <item android:name="android:paddingRight">15dp</item>
+    <item android:name="android:paddingTop">8dp</item>
+    <item android:name="android:paddingBottom">8dp</item>
+    <item android:name="android:textSize">14sp</item>
+    <item android:name="android:textColor">@color/white90</item>
+    <item android:name="android:gravity">center</item>
+    <item android:name="android:background">@drawable/selector_button</item>
+    <item android:name="android:foreground">@null</item>
+</selector>

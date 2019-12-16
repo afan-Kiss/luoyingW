@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingTop="25dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="25dp">
+
+    <TextView
+        android:id="@+id/textview_tokenaccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lorem"
+        android:textSize="15dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/textview_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="775 016"
+            android:textColor="#FDD835"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/textview_time"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentRight="true"-->
+        <!--            android:layout_centerVertical="true"-->
+        <!--            android:text="60" />-->
+
+<!--        <com.hjq.demo.widget.CircleProgress-->
+<!--            android:id="@+id/circle_progress_bar"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            app:animTime="1000"-->
+<!--            app:antiAlias="true"-->
+<!--            app:arcColors="@color/gray_999999"-->
+<!--            app:arcWidth="2dp"-->
+<!--            app:bgArcColor="@color/white"-->
+<!--            app:bgArcWidth="20dp"-->
+<!--            app:hintSize="20dp"-->
+<!--            app:maxValue="60"-->
+<!--            app:startAngle="270"-->
+<!--            app:sweepAngle="360"-->
+<!--            app:unitSize="25dp"-->
+<!--            app:valueColor="@color/gray_999999"-->
+<!--            app:valueSize="12sp">-->
+
+<!--        </com.hjq.demo.widget.CircleProgress>-->
+        <com.hjq.demo.widget.CircleProgress
+            android:id="@+id/circle_progress_bar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:animTime="1000"
+            app:antiAlias="true"
+            app:arcWidth="2dp"
+            app:bgArcColor="@color/transparent"
+            app:bgArcWidth="0dp"
+            app:hintSize="0dp"
+            app:maxValue="60"
+            app:startAngle="270"
+            app:sweepAngle="360"
+            app:valueColor="@color/gray_999999"
+            app:valueSize="12sp"
+            android:scrollbarSize="50dp"
+            >
+
+        </com.hjq.demo.widget.CircleProgress>
+<!--        app:arcColors="@color/gray_999999"-->
+
+    </RelativeLayout>
+
+</LinearLayout>

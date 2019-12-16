@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    tools:context=".daerxiansheng.Activity.SearchActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/relativelayout_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_toEndOf="@+id/imageview_back"
+            android:id="@+id/relativelayout_search"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginLeft="9dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/textview_cancle"
+            android:layout_toLeftOf="@id/textview_cancle"
+            android:background="@drawable/shape_fillgrayf6f6f6_bordernone_radius5"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@+id/imageview_back">
+
+            <ImageView
+                android:id="@+id/imageview_cancle"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:src="@mipmap/search_cancle" />
+            <EditText
+                android:id="@+id/edittext_search"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/transparent"
+                android:drawableStart="@mipmap/search"
+                android:drawableLeft="@mipmap/search"
+                android:drawablePadding="8.5dp"
+                android:gravity="center_vertical"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:paddingStart="8.5dp"
+                android:paddingLeft="8.5dp"
+                android:layout_marginEnd="24dp"
+                android:singleLine="true"
+                android:textColor="@color/black_333333"
+                android:textColorHint="@color/gray_AAAAAA"
+                android:textSize="16sp"
+                android:layout_marginRight="24dp" />
+
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textview_cancle"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="@string/common_cancel"
+            android:layout_centerVertical="true"
+            android:textColor="@color/yellow_FD9644"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedscrollview_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relativelayout_title"
+        android:background="@color/white"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/linearlayout_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/gray_EEEEEE">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9.5dp"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_userinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9.5dp"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

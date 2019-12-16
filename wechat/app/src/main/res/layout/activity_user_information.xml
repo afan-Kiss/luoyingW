@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".guowenbin.activity.UserInformationActivity">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:leftColor="#333333"
+        app:title="用户资料" />
+
+
+    <RelativeLayout
+        android:id="@+id/user_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TitleBar"
+        android:background="@color/white"
+
+        >
+
+        <ImageView
+            android:id="@+id/img_user_head"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/add_group" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="28dp"
+            android:layout_toRightOf="@+id/img_user_head"
+            android:text="看看就好"
+            android:textColor="#ff333333"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="13dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="36dp"
+            android:layout_toRightOf="@+id/tv_name"
+            android:background="@drawable/female" />
+
+
+        <TextView
+            android:id="@+id/tv_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/img_user_head"
+            android:text="账号：1589651254"
+            android:textColor="#ff888888"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/user_info"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="315dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@drawable/view_line" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/user_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_line"
+
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="47dp"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/positioning" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="23dp"
+            android:text="福建 厦门"
+            android:textColor="#ff888888"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/user_ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_ll"
+
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="47dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/userinfo_message" />
+
+        <TextView
+            android:id="@+id/tv_geqian"
+            android:layout_width="293dp"
+            android:layout_height="38dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="15dp"
+            android:text="时间对方过后国际化背景韩国好几个回家规划局
+黑科技回家客户和客"
+            android:textColor="#ff888888"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/user_ll1"
+        android:background="#EEEEEE">
+
+        <TextView
+            android:id="@+id/user_add_friends"
+            style="@style/RectButtonStyle"
+            android:layout_width="341dp"
+            android:layout_height="44dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:text="添加到通讯录"
+            android:textColor="#FD9644" />
+    </RelativeLayout>
+
+</RelativeLayout>

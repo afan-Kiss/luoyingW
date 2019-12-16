@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:layoutAnimation="@anim/layout_animation_from_bottom"
+    android:orientation="vertical"
+    tools:context=".ui.activity.LoginActivity"
+    tools:layoutAnimation="@null">
+
+    <com.hjq.bar.TitleBar
+        android:id="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:backButton="false"
+        app:barStyle="transparent"
+        app:rightColor="@color/colorAccent"
+        app:title="" />
+
+    <LinearLayout
+        android:id="@+id/ll_login_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="40dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/logo_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/login_logo"
+            android:layout_marginLeft="15dp"/>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_login_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_home_text"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+
+        <com.hjq.widget.view.ClearEditText
+            android:id="@+id/et_login_phone"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:hint="@string/common_phone_input_hint"
+            android:singleLine="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:drawablePadding="20dp"
+            android:focusableInTouchMode="true"
+            android:drawableLeft="@drawable/login_phone"
+
+            />
+
+       <!-- <ImageView
+            android:id="@+id/phone_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/login_phone" />-->
+
+        <com.hjq.widget.view.PasswordEditText
+            android:id="@+id/et_login_password"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_below="@+id/et_login_phone"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:hint="@string/common_password_input_error"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:drawablePadding="20dp"
+            android:focusableInTouchMode="true"
+            android:drawableLeft="@drawable/login_password"/>
+
+     <!--   <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_login_phone"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="34dp"
+            android:src="@drawable/login_password" />-->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/et_login_password"
+            android:layout_gravity="center"
+            android:layout_marginTop="45dp"
+            android:text="@string/login_text" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:padding="20dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/btn_forgetr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="忘记密码？"
+            android:gravity="left|center_vertical"
+            android:textColor="#ff666666"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:text="快速注册"
+            android:textColor="#fff7bc65"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,32 @@
+apply from: 'versions.gradle'
+
+buildscript {
+    repositories {
+        jcenter()
+        google()
+        mavenCentral() // add repository
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath'org.greenrobot:greendao-gradle-plugin:3.2.2'  //添加greendao数据库插件
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
+        maven {url "https://jitpack.io"}
+        maven {url 'https://maven.google.com'}
+        maven {url 'http://dl.bintray.com/lukaville/maven'}
+        maven {url  "https://dl.bintray.com/rongcloud/maven"}
+
+
+
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

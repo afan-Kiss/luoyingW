@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:leftIcon="@mipmap/ico_left"
+        app:lineVisible="false"
+        app:title="@string/adduser"
+        app:titleColor="@color/black_333333"
+        app:titleSize="17sp" />
+
+    <EditText
+        android:id="@+id/edittext_search"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/shape_fillgrayf6f6f6_bordernone_radius18"
+        android:drawableStart="@mipmap/search"
+        android:drawableLeft="@mipmap/search"
+        android:hint="@string/phone_number"
+        android:textColorHint="@color/gray_AAAAAA"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:paddingStart="20dp"
+        android:textColor="@color/black_333333"
+        android:paddingLeft="20dp"
+        android:drawablePadding="8.5dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+
+</LinearLayout>

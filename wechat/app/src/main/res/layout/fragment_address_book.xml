@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/TitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftIcon="@mipmap/bar_icon_back_white"
+        app:rightIcon="@drawable/add_friends"
+        app:title="通讯录"
+        app:titleColor="@color/orange"/>
+
+    <LinearLayout
+        android:id="@+id/address_book_ll"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_below="@+id/TitleBar"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10.5dp"
+        android:background="@drawable/shape_fillgrayf6f6f6_bordernone_radius18"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="10.5dp"
+            android:layout_height="10dp"
+            android:src="@mipmap/search"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/search"
+            android:textColor="@color/gray_AAAAAA"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/fragment_address_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/address_book_ll">
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swiper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.hjq.demo.widget.WaveSideBar
+            android:id="@+id/sidebar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="8dp"
+            app:sidebar_text_size="12sp"
+            app:sidebar_max_offset="8dp"
+            app:sidebar_position="right"
+            app:sidebar_text_color="#000000"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

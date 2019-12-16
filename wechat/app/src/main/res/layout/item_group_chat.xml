@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="15dp"
+    android:paddingTop="12dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="12dp">
+
+
+    <ImageView
+        android:id="@+id/group_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@android:color/holo_blue_dark" />
+
+    <TextView
+        android:id="@+id/group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:text="贝塔舒克开飞机带你游全世界" />
+</LinearLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="38dp"
+    android:background="@color/white">
+    <TextView
+        android:id="@+id/textview_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/black_333333"
+        android:text="阿斯顿将开放"
+        android:layout_marginLeft="16dp" />
+    <View
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        style="@style/viewline_height1dp"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_E2E5E7"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>
