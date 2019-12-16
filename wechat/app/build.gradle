@@ -264,11 +264,9 @@ dependencies {
 //    api 'cn.rongcloud.sdk:im_lib:2.9.18'
 
 
-
-
 //    implementation('cn.rongcloud.rtclib:rtc_lib:3.1.6')
-    implementation('io.rong.signalingkit:RongSignalingKit:1.0.0')
-    implementation('io.rong.signal:RongSignalingLib:3.0.0')
+    //   implementation('io.rong.signalingkit:RongSignalingKit:1.0.0')
+    //   implementation('io.rong.signal:RongSignalingLib:3.0.0')
 
 
     implementation('cn.rongcloud.sdk:im_kit:2.10.1') {
@@ -283,9 +281,9 @@ dependencies {
             }
 //    api 'cn.rongcloud.sdk:call_kit:2.10.1'
     api('cn.rongcloud.sdk:call_kit:2.10.1')
-    {
-        exclude group: 'com.github.bumptech.glide'
-    }
+            {
+                exclude group: 'com.github.bumptech.glide'
+            }
 
 
 }
