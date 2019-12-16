@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hjq.demo.R;
 import com.hjq.demo.api.API;
 import com.hjq.demo.common.MyActivity;
 import com.hjq.demo.guowenbin.adapter.AddFriendsAdapter;
 import com.hjq.demo.model.AddFriendListModel;
-import com.hjq.demo.model.FriendListModel;
 import com.hjq.demo.model.SendAddFriendModel;
 import com.hjq.demo.session.UserManager;
 import com.hjq.demo.ui.activity.HomeActivity;
@@ -21,10 +24,6 @@ import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 
@@ -90,7 +89,7 @@ public class AddNewFriendActivity extends MyActivity implements BaseQuickAdapter
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override
@@ -132,7 +131,7 @@ public class AddNewFriendActivity extends MyActivity implements BaseQuickAdapter
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override

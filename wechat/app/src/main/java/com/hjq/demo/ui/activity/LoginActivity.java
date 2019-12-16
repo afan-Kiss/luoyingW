@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -202,7 +201,7 @@ public final class LoginActivity extends MyActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override

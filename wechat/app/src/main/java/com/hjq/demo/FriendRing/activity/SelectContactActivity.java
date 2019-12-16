@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
 import com.hjq.demo.FriendRing.adapter.SelectContactAdapter;
@@ -24,8 +27,6 @@ import com.lzy.okgo.model.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
@@ -167,7 +168,7 @@ public class SelectContactActivity extends MyActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override

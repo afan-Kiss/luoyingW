@@ -1,14 +1,12 @@
 package com.hjq.demo.guowenbin.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.util.Log;
+import android.view.View;
+
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hjq.demo.R;
@@ -16,9 +14,7 @@ import com.hjq.demo.api.API;
 import com.hjq.demo.common.MyActivity;
 import com.hjq.demo.daerxiansheng.sql.DBHelper;
 import com.hjq.demo.daerxiansheng.sql.VirtualAppEntity;
-import com.hjq.demo.guowenbin.adapter.AddressBookAdapter;
 import com.hjq.demo.guowenbin.adapter.VirtualAdApter;
-import com.hjq.demo.mine_chenmo.activity.ChatActivity;
 import com.hjq.demo.model.FriendListModel;
 import com.hjq.demo.session.UserManager;
 import com.hjq.demo.util.ApiURLUtils;
@@ -98,7 +94,7 @@ public class VirtualActivity extends MyActivity implements BaseQuickAdapter.OnIt
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override

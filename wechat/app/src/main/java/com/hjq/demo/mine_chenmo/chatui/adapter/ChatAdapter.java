@@ -455,7 +455,7 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Toast.makeText(mContext, "服务器错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, R.string.error_network, Toast.LENGTH_SHORT).show();
                         if (popupWindow != null) {
                             popupWindow.dismiss();
                             popupWindow = null;
@@ -505,7 +505,7 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Toast.makeText(mContext, "服务器错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, R.string.error_network, Toast.LENGTH_SHORT).show();
                         if (popupWindow != null) {
                             popupWindow.dismiss();
                             popupWindow = null;

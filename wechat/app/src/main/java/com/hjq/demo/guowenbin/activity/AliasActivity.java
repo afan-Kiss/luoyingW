@@ -10,8 +10,6 @@ import com.hjq.demo.api.API;
 import com.hjq.demo.common.MyActivity;
 import com.hjq.demo.model.AliasModel;
 import com.hjq.demo.model.FriendDetailsModel;
-import com.hjq.demo.model.FriendListModel;
-import com.hjq.demo.model.GroupListModel;
 import com.hjq.demo.session.UserManager;
 import com.hjq.demo.util.ApiURLUtils;
 import com.hjq.widget.view.ClearEditText;
@@ -134,7 +132,7 @@ public class AliasActivity extends MyActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override
@@ -176,7 +174,7 @@ public class AliasActivity extends MyActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override
@@ -219,7 +217,7 @@ public class AliasActivity extends MyActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override

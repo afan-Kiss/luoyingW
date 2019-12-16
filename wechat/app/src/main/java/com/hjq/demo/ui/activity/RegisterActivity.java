@@ -8,12 +8,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.gyf.immersionbar.ImmersionBar;
 import com.hjq.demo.R;
 import com.hjq.demo.api.API;
 import com.hjq.demo.common.MyActivity;
 import com.hjq.demo.helper.InputTextHelper;
-import com.hjq.demo.model.UserInfoModel;
 import com.hjq.demo.other.IntentKey;
 import com.hjq.demo.util.ApiURLUtils;
 import com.hjq.demo.util.DoubleClickUtils;
@@ -173,7 +171,7 @@ public final class RegisterActivity extends MyActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override
@@ -214,7 +212,7 @@ public final class RegisterActivity extends MyActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override

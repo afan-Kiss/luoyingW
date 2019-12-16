@@ -1,12 +1,8 @@
 package com.hjq.demo.guowenbin.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -107,7 +103,7 @@ public class VirtualFriendActivity extends MyActivity implements View.OnClickLis
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override

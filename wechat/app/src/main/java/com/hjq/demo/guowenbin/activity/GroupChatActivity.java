@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.hjq.demo.FriendRing.activity.SelectContactActivity;
 import com.hjq.demo.R;
 import com.hjq.demo.api.API;
 import com.hjq.demo.common.MyActivity;
@@ -18,8 +17,6 @@ import com.hjq.demo.daerxiansheng.sql.GroupEntity;
 import com.hjq.demo.daerxiansheng.sql.GroupUserEntity;
 import com.hjq.demo.guowenbin.adapter.GroupChatAdapter;
 import com.hjq.demo.mine_chenmo.activity.NewChatActivity;
-import com.hjq.demo.mine_chenmo.adapter.TokenAdapter;
-import com.hjq.demo.model.FriendListModel;
 import com.hjq.demo.model.GroupListModel;
 import com.hjq.demo.session.Tezheng;
 import com.hjq.demo.session.UserManager;
@@ -99,7 +96,7 @@ public class GroupChatActivity extends MyActivity implements BaseQuickAdapter.On
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override

@@ -14,7 +14,6 @@ import com.hjq.demo.api.API;
 import com.hjq.demo.appsys.EventArgs;
 import com.hjq.demo.appsys.EventType;
 import com.hjq.demo.common.MyActivity;
-import com.hjq.demo.daerxiansheng.sql.DBHelper;
 import com.hjq.demo.daerxiansheng.sql.FrendsMessageEntity;
 import com.hjq.demo.mine_chenmo.adapter.ChatAdapter;
 import com.hjq.demo.model.CharModel;
@@ -130,7 +129,7 @@ public class ChatActivity extends MyActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override
@@ -197,7 +196,7 @@ public class ChatActivity extends MyActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        toast("服务器异常");
+                        toast(R.string.error_network);
                     }
 
                     @Override
