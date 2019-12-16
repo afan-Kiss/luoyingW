@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,7 +24,6 @@ import com.hjq.demo.daerxiansheng.Activity.AddUserActivity;
 import com.hjq.demo.daerxiansheng.Activity.SearchActivity;
 import com.hjq.demo.daerxiansheng.sql.DBHelper;
 import com.hjq.demo.daerxiansheng.sql.FrendsEntity;
-import com.hjq.demo.daerxiansheng.sql.MessageListEntity;
 import com.hjq.demo.guowenbin.activity.AddNewFriendActivity;
 import com.hjq.demo.guowenbin.activity.FrienProfileActivity;
 import com.hjq.demo.guowenbin.activity.GroupChatActivity;
@@ -146,21 +144,21 @@ public class AddressBookFragment extends MyLazyFragment<HomeActivity> implements
     }
 
     void Updatebuddylist() {
-        if (!NetworkUtils.isNetworkAvailable(getActivity())){
+        if (!NetworkUtils.isNetworkAvailable(getActivity())) {
             List<FrendsEntity> dataList = DBHelper.queryFrend();
-            if (dataList != null && dataList.size()>0){
+            if (dataList != null && dataList.size() > 0) {
                 List<FriendListModel.AllArrayBean> mNoNetDateList = new ArrayList<>();
-                for (int i = 0; i <dataList.size() ; i++) {
+                for (int i = 0; i < dataList.size(); i++) {
                     FriendListModel.AllArrayBean bean = new FriendListModel.AllArrayBean();
                     FrendsEntity frendsEntity = dataList.get(i);
                     bean.setUser_id(frendsEntity.getUserid());
-                    bean.setBlack(frendsEntity.getBlack()+"");
+                    bean.setBlack(frendsEntity.getBlack() + "");
                     bean.setCard(frendsEntity.getCard());
-                    bean.setDisturb(frendsEntity.getDisturb()+"");
+                    bean.setDisturb(frendsEntity.getDisturb() + "");
                     bean.setUsername(frendsEntity.getUsername());
                     bean.setNickname(frendsEntity.getNickname());
                     bean.setHead_img(frendsEntity.getHead_img());
-                    bean.setFsate(1+"");
+                    bean.setFsate(1 + "");
                     mNoNetDateList.add(bean);
                 }
                 addressBookAdapter.setNewData(mNoNetDateList);
@@ -343,6 +341,9 @@ public class AddressBookFragment extends MyLazyFragment<HomeActivity> implements
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        if (adapter.getData() == null || adapter.getData().isEmpty()) {
+            return;
+        }
         FriendListModel.AllArrayBean bean = (FriendListModel.AllArrayBean) adapter.getData().get(position);
         switch (view.getId()) {
             case R.id.add_new_friends:
@@ -357,6 +358,11 @@ public class AddressBookFragment extends MyLazyFragment<HomeActivity> implements
                 startActivity(intent1);
                 break;
             case R.id.ll_layouts:
+                if (bean == null) {
+                    return;
+                }
+                this.intent = new Intent();
+                this.intent.setClass(getActivity(), FrienProfileActivity.class);
                 this.intent.putExtra("uid", bean.getUser_id());
                 this.intent.putExtra("card", bean.getCard());
                 this.intent.putExtra("username", bean.getUsername());
@@ -397,8 +403,7 @@ public class AddressBookFragment extends MyLazyFragment<HomeActivity> implements
     }
 
 
-
-    private void reloadData(){
+    private void reloadData() {
         Updatebuddylist();
         mSwipview.setRefreshing(false);
     }

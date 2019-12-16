@@ -11,6 +11,8 @@
       <module fileurl="file://$PROJECT_DIR$/image/image.iml" filepath="$PROJECT_DIR$/image/image.iml" />
       <module fileurl="file://$PROJECT_DIR$/umeng/umeng.iml" filepath="$PROJECT_DIR$/umeng/umeng.iml" />
       <module fileurl="file://$PROJECT_DIR$/wechat.iml" filepath="$PROJECT_DIR$/wechat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CallKit/wechat-CallKit.iml" filepath="$PROJECT_DIR$/CallKit/wechat-CallKit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CallLib/wechat-CallLib.iml" filepath="$PROJECT_DIR$/CallLib/wechat-CallLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/widget/widget.iml" filepath="$PROJECT_DIR$/widget/widget.iml" />
     </modules>
   </component>

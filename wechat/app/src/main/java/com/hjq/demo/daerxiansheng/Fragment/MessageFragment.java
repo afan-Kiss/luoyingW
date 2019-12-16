@@ -274,6 +274,7 @@ public class MessageFragment extends MyLazyFragment<HomeActivity> {
         adapter.notifyDataSetChanged();
         mCurrentChatCardPositon = -1;
         MyApplication.mCurrentChatCard = null;
+        titlebar_title.setTitle((NetworkUtils.isNetworkAvailable(getActivity()) ? "消息" : "消息(无网络)"));
     }
 
 
