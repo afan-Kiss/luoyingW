@@ -67,7 +67,7 @@ public class AddNewFriendActivity extends MyActivity implements BaseQuickAdapter
         map.clear();
         map.put("Method", "FriendList");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {
@@ -107,7 +107,7 @@ public class AddNewFriendActivity extends MyActivity implements BaseQuickAdapter
         map.put("Method", "Adoptfriends");
         map.put("Card", code);
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {

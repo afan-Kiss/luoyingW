@@ -93,7 +93,7 @@ public final class RegisterActivity extends MyActivity {
 
                     @Override
                     public boolean onInputChange(InputTextHelper helper) {
-                        return mPhoneView.getText().toString().length() == 11 &&
+                        return mPhoneView.getText().toString().length() >0 &&
                                 mPasswordView1.getText().toString().length() >= 6 &&
                                 mPasswordView1.getText().toString().equals(mPasswordView2.getText().toString());
                     }
@@ -106,7 +106,6 @@ public final class RegisterActivity extends MyActivity {
 
     }
 
-//        //蛇精病,就是要把布局顶上去
 //    @Override
 //    protected ImmersionBar statusBarConfig() {
 ////        // 不要把整个布局顶上去
@@ -118,7 +117,7 @@ public final class RegisterActivity extends MyActivity {
         switch (v.getId()) {
             case R.id.cv_register_countdown:
                 // 获取验证码按钮
-                if (mPhoneView.getText().toString().length() != 11) {
+                if (mPhoneView.getText().toString().length() <1) {
 
                     // 重置验证码倒计时控件
                     mCountdownView.resetState();

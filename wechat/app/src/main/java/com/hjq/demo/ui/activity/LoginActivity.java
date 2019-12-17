@@ -90,8 +90,8 @@ public final class LoginActivity extends MyActivity {
                 .setListener(new InputTextHelper.OnInputTextListener() {
                     @Override
                     public boolean onInputChange(InputTextHelper helper) {
-                        return mPhoneView.getText().toString().length() == 11 &&
-                                mPasswordView.getText().toString().length() >= 6;
+                        return mPhoneView.getText().toString().length() >0 &&
+                                mPasswordView.getText().toString().length() >=6;
                     }
                 })
                 .build();
@@ -135,7 +135,7 @@ public final class LoginActivity extends MyActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                if (mPhoneView.getText().toString().length() != 11) {
+                if (mPhoneView.getText().toString().length()<1) {
                     toast(R.string.common_phone_input_error);
                 } else {
                     showLoading();
@@ -177,7 +177,7 @@ public final class LoginActivity extends MyActivity {
         map.put("Password", mPasswordView.getText().toString());
 //        map.put("Username", mEtAreaCode.getText().toString() + "-" + mPhoneView.getText().toString());
         map.put("Username", mPhoneView.getText().toString());
-
+        Log.i("888888", "onSuccess: " + mPhoneView.getText().toString());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {
