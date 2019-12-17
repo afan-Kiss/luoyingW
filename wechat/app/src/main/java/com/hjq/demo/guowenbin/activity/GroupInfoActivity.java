@@ -100,7 +100,7 @@ public class GroupInfoActivity extends MyActivity implements BaseQuickAdapter.On
         map.clear();
         map.put("Method", "GroupList");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {
@@ -232,7 +232,7 @@ public class GroupInfoActivity extends MyActivity implements BaseQuickAdapter.On
         map.put("Method", "Outgroup");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Gcard", Gcard);
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {
@@ -271,7 +271,7 @@ public class GroupInfoActivity extends MyActivity implements BaseQuickAdapter.On
         map.put("Method", "SearchUser");
         map.put("SearchKey", SearchKey);
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>get(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {

@@ -136,7 +136,7 @@ public class UserInfoActivity extends MyActivity {
         map.clear();
         map.put("Method", "Updatemember");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Nickname", stb_set_name.getRightText().toString());//昵称
         map.put("Head_img", imgurl);//头像
         map.put("Gender", "2");//性别
@@ -214,7 +214,7 @@ public class UserInfoActivity extends MyActivity {
         Map<String, String> map = new HashMap<>();
         map.clear();
         map.put("Method", "Upload");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         List<File> fileList = new ArrayList<>();
         File file = new File(path);

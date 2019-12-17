@@ -217,8 +217,8 @@ public class FriendRingFragment extends MyLazyFragment {
         Log.d("page", page + "");
         map.clear();
         map.put("Method", "Circle");
-//        map.put("Username", UserManager.getUser().getPhone_number());
-        map.put("Username", userName);
+        map.put("Username", UserManager.getUser().getUsername());
+//        map.put("Username", userName);
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Page", String.valueOf(page));
         map.put("PageSize", "10");
@@ -315,7 +315,7 @@ public class FriendRingFragment extends MyLazyFragment {
     public void dynamicReplace(String imagePath) {
         map.clear();
         map.put("Method", "Imgcircle");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Imgurl", imagePath);
         OkGo.<String>post(API.BASE_API)
@@ -358,7 +358,7 @@ public class FriendRingFragment extends MyLazyFragment {
         map.clear();
         showLoading();
         map.put("Method", "Dcircle");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Fid", fid);
         OkGo.<String>post(API.BASE_API)
@@ -394,7 +394,7 @@ public class FriendRingFragment extends MyLazyFragment {
     public void Ucomment() {
         map.clear();
         map.put("Method", "Ucomment");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
@@ -434,7 +434,7 @@ public class FriendRingFragment extends MyLazyFragment {
     public void Ulike() {
         map.clear();
         map.put("Method", "Ulike");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
@@ -475,7 +475,7 @@ public class FriendRingFragment extends MyLazyFragment {
     private void Rlike(String fid) {
         map.clear();
         map.put("Method", "Rlike");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Fid", fid);
         OkGo.<String>post(API.BASE_API)
@@ -514,7 +514,7 @@ public class FriendRingFragment extends MyLazyFragment {
     private void fcircle(String fid) {
         map.clear();
         map.put("Method", "Fcircle");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Fid", fid);
         map.put("Jurisdiction", "0");
@@ -553,7 +553,7 @@ public class FriendRingFragment extends MyLazyFragment {
     public void comment(String content, String fid) {
         map.clear();
         map.put("Method", "Rcomment");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Fid", fid);
         map.put("textval", content);
@@ -592,7 +592,7 @@ public class FriendRingFragment extends MyLazyFragment {
     public void uploadpicture(String path) throws IOException {
         map.clear();
         map.put("Method", "Upload");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         List<File> fileList = new ArrayList<>();
         File file = new File(path);

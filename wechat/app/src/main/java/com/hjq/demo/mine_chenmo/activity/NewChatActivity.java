@@ -230,7 +230,7 @@ public class NewChatActivity extends BaseCallActivity implements SwipeRefreshLay
         map.clear();
         map.put("Method", "Rchat");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         if (rclass.equals("1")) {
             map.put("Rval", RxEncryptTool.base64Encode2(txt));
         } else {
@@ -326,7 +326,7 @@ public class NewChatActivity extends BaseCallActivity implements SwipeRefreshLay
         map.clear();
         map.put("Method", "Uchat");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
 
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
@@ -848,7 +848,7 @@ public class NewChatActivity extends BaseCallActivity implements SwipeRefreshLay
             case R.id.rlVideo:
 //                Intent video = new Intent(NewChatActivity.this, VoipActivity.class);
 //                video.putExtra("Sinkey", UserManager.getUser().getLoginkey());
-//                video.putExtra("Username", UserManager.getUser().getPhone_number());
+//                video.putExtra("Username", UserManager.getUser().getUsername());
 //                video.putExtra("card", getIntent().getStringExtra("card"));
 //                video.putExtra("targetId", getIntent().getStringExtra("username"));
 //                video.putExtra("send", "1");
@@ -867,7 +867,7 @@ public class NewChatActivity extends BaseCallActivity implements SwipeRefreshLay
             case R.id.rlVoice:
 //                Intent voice = new Intent(NewChatActivity.this, VoipAudioActivity.class);
 //                voice.putExtra("Sinkey", UserManager.getUser().getLoginkey());
-//                voice.putExtra("Username", UserManager.getUser().getPhone_number());
+//                voice.putExtra("Username", UserManager.getUser().getUsername());
 //                voice.putExtra("card", getIntent().getStringExtra("card"));
 //                voice.putExtra("targetId", getIntent().getStringExtra("username"));
 //                voice.putExtra("send", "1");
@@ -1134,7 +1134,7 @@ public class NewChatActivity extends BaseCallActivity implements SwipeRefreshLay
         Map<String, String> map = new HashMap<>();
         map.clear();
         map.put("Method", "Upload");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         List<File> fileList = new ArrayList<>();
         File file = new File(path);

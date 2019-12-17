@@ -507,7 +507,7 @@ public class ChatAdapter extends BaseQuickAdapter<Message, BaseViewHolder> {
         map.put("Method", "Dchat");
         map.put("Rid", mMessage.getMsgId());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {

@@ -133,7 +133,7 @@ public class CreatGroupActivity extends MyActivity {
     void CreatGroup() {
         map.put("Method", "Rgroup");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Groupname", "TG one");
         map.put("Groupimg ", url);
         if (idList.size() > 0) {

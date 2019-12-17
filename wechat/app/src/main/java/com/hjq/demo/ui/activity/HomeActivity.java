@@ -116,7 +116,7 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
             }
         }, 1000, 2000);
         service = new Intent(this, KeepLiveService.class);
-        service.putExtra("Username", UserManager.getUser().getPhone_number());
+        service.putExtra("Username", UserManager.getUser().getUsername());
         startService(service);
 
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
@@ -458,7 +458,7 @@ public final class HomeActivity extends MyActivity implements KeyboardWatcher.So
         intent.putExtra("nickname", acceptVideoModel.getNickname());
         intent.putExtra("ip", acceptVideoModel.getIp());
         intent.putExtra("aid", acceptVideoModel.getAid());
-        intent.putExtra("Username", UserManager.getUser().getPhone_number());
+        intent.putExtra("Username", UserManager.getUser().getUsername());
         intent.putExtra("Sinkey", UserManager.getUser().getLoginkey());
         intent.putExtra("head_img", acceptVideoModel.getHead_img());
         intent.putExtra("targetId", acceptVideoModel.getPhone());

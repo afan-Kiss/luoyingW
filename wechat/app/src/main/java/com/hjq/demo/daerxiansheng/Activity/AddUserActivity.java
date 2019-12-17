@@ -1,7 +1,5 @@
 package com.hjq.demo.daerxiansheng.Activity;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,17 +7,16 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.hjq.demo.R;
 import com.hjq.demo.api.API;
 import com.hjq.demo.common.MyActivity;
-import com.hjq.demo.daerxiansheng.sql.DBHelper;
-import com.hjq.demo.daerxiansheng.sql.FrendsMessageEntity;
 import com.hjq.demo.guowenbin.activity.FrienProfileActivity;
 import com.hjq.demo.guowenbin.activity.UserInformationActivity;
 import com.hjq.demo.model.AddFriendModel;
 import com.hjq.demo.session.UserManager;
 import com.hjq.demo.util.ApiURLUtils;
-import com.hjq.demo.util.TimeUtils;
 import com.hjq.demo.util.Utils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -66,7 +63,7 @@ public class AddUserActivity extends MyActivity {
         map.put("Method", "SearchUser");
         map.put("SearchKey", edittext_search.getText().toString());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>get(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {

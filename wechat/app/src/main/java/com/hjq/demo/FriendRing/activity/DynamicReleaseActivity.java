@@ -177,7 +177,7 @@ public class DynamicReleaseActivity extends MyActivity {
         showLoading();
         map.clear();
         map.put("Method", "Relcircle");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         if (!TextUtils.isEmpty(mTvDynamicContent.getText().toString().trim())) {
             map.put("Textval", RxEncryptTool.base64Encode2(mTvDynamicContent.getText().toString().trim()));
@@ -233,7 +233,7 @@ public class DynamicReleaseActivity extends MyActivity {
     public void uploadpicture(String path, boolean isRealse) throws IOException {
         map.clear();
         map.put("Method", "Upload");
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         List<File> fileList = new ArrayList<>();
         File file = new File(path);

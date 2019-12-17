@@ -69,7 +69,7 @@ public class GroupChatActivity extends MyActivity implements BaseQuickAdapter.On
         map.clear();
         map.put("Method", "GroupList");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {

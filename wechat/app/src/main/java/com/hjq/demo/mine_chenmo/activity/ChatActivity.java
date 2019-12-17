@@ -106,7 +106,7 @@ public class ChatActivity extends MyActivity {
         map.clear();
         map.put("Method", "Rchat");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Rval", et_txt.getText().toString());
         map.put("Rtype", "1");
         map.put("Rclass", "1");
@@ -169,7 +169,7 @@ public class ChatActivity extends MyActivity {
         map.clear();
         map.put("Method", "Uchat");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
 
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))

@@ -426,7 +426,14 @@ public abstract class MyActivity extends BaseActivity
 
 
     public ResponseBody CheckDate(String date) {
-        ResponseBody responseBody = gson.fromJson(RxEncryptTool.unicodeDecode(new String(RxEncryptTool.base64Decode(date))), ResponseBody.class);
+        ResponseBody responseBody;
+        try {
+            responseBody = gson.fromJson(RxEncryptTool.unicodeDecode(new String(RxEncryptTool.base64Decode(date))), ResponseBody.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseBody = new ResponseBody();
+            responseBody.setMsg(getString(R.string.error_data));
+        }
 
         return responseBody;
     }

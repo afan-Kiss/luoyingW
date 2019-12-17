@@ -226,7 +226,7 @@ public class FrienProfileActivity extends MyActivity implements View.OnClickList
         map.put("Method", "Ufriends");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Card", card);
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {
@@ -277,7 +277,7 @@ public class FrienProfileActivity extends MyActivity implements View.OnClickList
         map.put("Method", "Dfriends");
         map.put("Card", card);
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {
@@ -331,7 +331,7 @@ public class FrienProfileActivity extends MyActivity implements View.OnClickList
         map.put("Method", "Blacklist");
         map.put("Card", card);
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("State", black);
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))

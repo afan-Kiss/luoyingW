@@ -68,7 +68,7 @@ public class VirtualActivity extends MyActivity implements BaseQuickAdapter.OnIt
         map.clear();
         map.put("Method", "Uapp");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
                 .execute(new StringCallback() {

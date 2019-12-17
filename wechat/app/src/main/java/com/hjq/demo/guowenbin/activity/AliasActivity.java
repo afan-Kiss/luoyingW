@@ -111,7 +111,7 @@ public class AliasActivity extends MyActivity {
         map.put("Method", "Alias");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
         map.put("Card", card);
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Remarks ", alias_edit.getText().toString());
         OkGo.<String>post(API.BASE_API)
                 .params("Data", ApiURLUtils.GetDate(map))
@@ -152,7 +152,7 @@ public class AliasActivity extends MyActivity {
         map.clear();
         map.put("Method", "Modgroup");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Gcard", Gcard);
         map.put("Groupname", alias_edit.getText().toString());
         map.put("Gnotic", getGroup_notic);
@@ -194,7 +194,7 @@ public class AliasActivity extends MyActivity {
         map.clear();
         map.put("Method", "Modgroup");
         map.put("Sinkey", UserManager.getUser().getLoginkey());
-        map.put("Username", UserManager.getUser().getPhone_number());
+        map.put("Username", UserManager.getUser().getUsername());
         map.put("Gcard", Gcard);
         map.put("Groupname", getGroup_names);
         map.put("Gnotic", alias_edit.getText().toString());
